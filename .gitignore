@@ -1,0 +1,11 @@
+# 個人データ・ローカル設定は絶対にコミットしない
+local/
+data/
+*.db
+*.sqlite
+*.sqlite3
+redaction_profile.json
+__pycache__/
+.pytest_cache/
+*.pyc
+.venv/
