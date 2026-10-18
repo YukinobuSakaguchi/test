@@ -1,0 +1,18 @@
+{
+  "name": "skill-guide-build",
+  "private": true,
+  "description": "Builds the Word and PowerPoint versions of docs/skill-guide.md",
+  "scripts": {
+    "build:docx": "node md-to-docx.js",
+    "build:detail": "node slides-detail.js",
+    "build:proposal": "node slides-proposal.js",
+    "build:pptx": "npm run build:detail && npm run build:proposal",
+    "build:all": "npm run build:docx && npm run build:pptx"
+  },
+  "dependencies": {
+    "docx": "9.7.1",
+    "marked": "15.0.12",
+    "pptxgenjs": "3.12.0",
+    "jszip": "3.10.2"
+  }
+}
