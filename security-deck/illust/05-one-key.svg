@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none" stroke="#0A2A3C" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+  <circle cx="200" cy="200" r="178" fill="#CDE8EF" stroke="none"/>
+  <!-- one key -->
+  <g transform="translate(24 150)">
+    <circle cx="42" cy="50" r="38" fill="#FCE9A8"/>
+    <circle cx="42" cy="50" r="12" fill="#CDE8EF"/>
+    <path d="M78 50 H138 M112 50 V74 M130 50 V68" stroke-width="12"/>
+  </g>
+  <!-- connectors -->
+  <g stroke="#C8452D" stroke-width="5" stroke-dasharray="3 12">
+    <path d="M168 196 C 200 196 206 136 236 136"/>
+    <path d="M168 204 C 200 204 206 262 236 262"/>
+    <path d="M168 198 C 210 198 250 170 300 170" stroke="none"/>
+  </g>
+  <!-- four open padlocks (2 x 2) -->
+  <g id="lock1" transform="translate(236 78)">
+    <path d="M12 30 V18 a18 18 0 0 1 36 0 V8" fill="none"/>
+    <rect x="0" y="30" width="60" height="46" rx="10" fill="#FFFFFF"/>
+    <circle cx="30" cy="50" r="6" fill="#0A2A3C" stroke="none"/>
+  </g>
+  <g transform="translate(306 78)">
+    <path d="M12 30 V18 a18 18 0 0 1 36 0 V8" fill="none"/>
+    <rect x="0" y="30" width="60" height="46" rx="10" fill="#FFFFFF"/>
+    <circle cx="30" cy="50" r="6" fill="#0A2A3C" stroke="none"/>
+  </g>
+  <g transform="translate(236 214)">
+    <path d="M12 30 V18 a18 18 0 0 1 36 0 V8" fill="none"/>
+    <rect x="0" y="30" width="60" height="46" rx="10" fill="#FFFFFF"/>
+    <circle cx="30" cy="50" r="6" fill="#0A2A3C" stroke="none"/>
+  </g>
+  <g transform="translate(306 214)">
+    <path d="M12 30 V18 a18 18 0 0 1 36 0 V8" fill="none"/>
+    <rect x="0" y="30" width="60" height="46" rx="10" fill="#FFFFFF"/>
+    <circle cx="30" cy="50" r="6" fill="#0A2A3C" stroke="none"/>
+  </g>
+  <!-- extra connectors to the right-hand locks -->
+  <g stroke="#C8452D" stroke-width="5" stroke-dasharray="3 12">
+    <path d="M296 136 H306"/>
+    <path d="M296 262 H306"/>
+  </g>
+</svg>

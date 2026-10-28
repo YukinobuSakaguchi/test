@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none" stroke="#0A2A3C" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+  <circle cx="200" cy="200" r="178" fill="#CDE8EF" stroke="none"/>
+  <!-- account person -->
+  <circle cx="200" cy="58" r="22" fill="#FFFFFF"/>
+  <path d="M158 112 a42 42 0 0 1 84 0 Z" fill="#FFFFFF"/>
+  <!-- vault -->
+  <rect x="82" y="124" width="236" height="214" rx="26" fill="#FFFFFF"/>
+  <rect x="106" y="148" width="188" height="166" rx="16" fill="#007A99"/>
+  <circle cx="200" cy="231" r="48" fill="#FCE9A8"/>
+  <circle cx="200" cy="231" r="14" fill="#FFFFFF"/>
+  <path d="M200 183 V199 M200 263 V279 M152 231 H168 M232 231 H248"/>
+  <path d="M104 338 V358 M296 338 V358"/>
+  <!-- crack -->
+  <path d="M300 128 L284 160 L304 176 L288 206" stroke="#C8452D" stroke-width="8"/>
+  <!-- spare key outside -->
+  <g transform="translate(330 300) rotate(-35)">
+    <circle cx="0" cy="0" r="18" fill="#FCE9A8"/>
+    <circle cx="0" cy="0" r="5" fill="#CDE8EF"/>
+    <path d="M18 0 H52 M44 0 V12" stroke-width="7"/>
+  </g>
+</svg>

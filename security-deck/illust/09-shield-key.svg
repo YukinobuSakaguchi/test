@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none" stroke="#0A2A3C" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+  <circle cx="200" cy="200" r="178" fill="#CDE8EF" stroke="none"/>
+  <path d="M200 40 L316 84 V190 C316 262 266 318 200 352 C134 318 84 262 84 190 V84 Z" fill="#007A99"/>
+  <path d="M200 66 L292 100 V190 C292 248 252 296 200 324 C148 296 108 248 108 190 V100 Z" fill="#FFFFFF" stroke="none"/>
+  <!-- key -->
+  <g transform="translate(200 196) rotate(-40)">
+    <circle cx="-44" cy="0" r="30" fill="#FCE9A8"/>
+    <circle cx="-44" cy="0" r="9" fill="#FFFFFF"/>
+    <path d="M-14 0 H62 M38 0 V22 M56 0 V16" stroke-width="10"/>
+  </g>
+  <!-- check badge -->
+  <circle cx="288" cy="296" r="34" fill="#C8452D" stroke="#FFFFFF"/>
+  <path d="M272 296 L284 308 L306 284" stroke="#FFFFFF" stroke-width="8"/>
+</svg>

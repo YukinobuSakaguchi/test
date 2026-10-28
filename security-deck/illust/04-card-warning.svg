@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none" stroke="#0A2A3C" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+  <circle cx="200" cy="200" r="178" fill="#CDE8EF" stroke="none"/>
+  <g transform="translate(190 190) rotate(-8)">
+    <rect x="-140" y="-88" width="280" height="176" rx="24" fill="#007A99"/>
+    <rect x="-140" y="-56" width="280" height="30" fill="#0A2A3C"/>
+    <rect x="-112" y="-4" width="52" height="40" rx="9" fill="#FCE9A8"/>
+    <path d="M-112 16 H-60 M-86 -4 V36"/>
+    <g fill="#FFFFFF" stroke="none">
+      <circle cx="-110" cy="62" r="6"/><circle cx="-90" cy="62" r="6"/><circle cx="-70" cy="62" r="6"/><circle cx="-50" cy="62" r="6"/>
+      <circle cx="-20" cy="62" r="6"/><circle cx="0" cy="62" r="6"/><circle cx="20" cy="62" r="6"/><circle cx="40" cy="62" r="6"/>
+    </g>
+  </g>
+  <!-- warning badge -->
+  <path d="M290 214 L352 322 H228 Z" fill="#C8452D"/>
+  <rect x="285" y="250" width="10" height="36" rx="5" fill="#FFFFFF" stroke="none"/>
+  <circle cx="290" cy="302" r="6" fill="#FFFFFF" stroke="none"/>
+</svg>

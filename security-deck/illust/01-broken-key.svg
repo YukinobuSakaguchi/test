@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none" stroke="#0A2A3C" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+  <circle cx="200" cy="200" r="178" fill="#CDE8EF" stroke="none"/>
+  <g transform="translate(204 196) rotate(-32)">
+    <!-- head -->
+    <circle cx="-120" cy="0" r="58" fill="#FCE9A8"/>
+    <circle cx="-120" cy="0" r="20" fill="#CDE8EF"/>
+    <!-- shaft left piece (broken edge) -->
+    <path d="M-64 -16 H34 L22 -2 L38 10 L26 16 H-64 Z" fill="#FCE9A8"/>
+    <!-- shaft right piece, shifted and tilted -->
+    <g transform="translate(26 20) rotate(9)">
+      <path d="M34 -16 L48 -4 L40 6 L52 16 H150 V-16 Z" fill="#FCE9A8"/>
+      <path d="M96 16 V48 H116 V16" fill="#FCE9A8"/>
+      <path d="M128 16 V36 H146 V16" fill="#FCE9A8"/>
+    </g>
+  </g>
+  <!-- crack sparks -->
+  <path d="M198 176 L186 150" stroke="#C8452D"/>
+  <path d="M222 182 L240 160" stroke="#C8452D"/>
+  <path d="M208 232 L204 262" stroke="#C8452D"/>
+  <circle cx="176" cy="270" r="7" fill="#C8452D" stroke="none"/>
+  <circle cx="262" cy="150" r="6" fill="#C8452D" stroke="none"/>
+  <circle cx="150" cy="120" r="5" fill="#007A99" stroke="none"/>
+</svg>

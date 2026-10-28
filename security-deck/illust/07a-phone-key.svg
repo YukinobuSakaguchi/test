@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none" stroke="#0A2A3C" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+  <circle cx="200" cy="200" r="178" fill="#CDE8EF" stroke="none"/>
+  <rect x="116" y="48" width="168" height="304" rx="28" fill="#FFFFFF"/>
+  <path d="M176 70 H224"/>
+  <!-- key on screen -->
+  <circle cx="176" cy="160" r="30" fill="#FCE9A8"/>
+  <circle cx="176" cy="160" r="9" fill="#CDE8EF"/>
+  <path d="M206 160 H252 M236 160 V180 M250 160 V174" stroke-width="9"/>
+  <!-- fingerprint -->
+  <g stroke="#007A99" stroke-width="7">
+    <path d="M160 300 a40 40 0 0 1 80 0"/>
+    <path d="M172 306 a28 28 0 0 1 56 0"/>
+    <path d="M184 312 a16 16 0 0 1 32 0"/>
+    <path d="M200 318 V300"/>
+  </g>
+</svg>

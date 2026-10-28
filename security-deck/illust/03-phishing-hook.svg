@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none" stroke="#0A2A3C" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+  <circle cx="200" cy="200" r="178" fill="#CDE8EF" stroke="none"/>
+  <!-- fake login window -->
+  <rect x="64" y="176" width="272" height="176" rx="18" fill="#FFFFFF"/>
+  <path d="M64 214 V194 a18 18 0 0 1 18 -18 H318 a18 18 0 0 1 18 18 V214 Z" fill="#C8452D"/>
+  <circle cx="90" cy="195" r="5" fill="#FFFFFF" stroke="none"/>
+  <circle cx="110" cy="195" r="5" fill="#FFFFFF" stroke="none"/>
+  <circle cx="130" cy="195" r="5" fill="#FFFFFF" stroke="none"/>
+  <rect x="94" y="238" width="212" height="28" rx="8" fill="#CDE8EF"/>
+  <rect x="94" y="278" width="212" height="28" rx="8" fill="#CDE8EF"/>
+  <rect x="94" y="318" width="90" height="22" rx="8" fill="#FCE9A8"/>
+  <circle cx="112" cy="252" r="4" fill="#0A2A3C" stroke="none"/><circle cx="128" cy="252" r="4" fill="#0A2A3C" stroke="none"/><circle cx="144" cy="252" r="4" fill="#0A2A3C" stroke="none"/>
+  <!-- hook and line -->
+  <path d="M200 22 V104" />
+  <path d="M200 104 V122 C200 150 164 154 162 128 L172 138" stroke="#C8452D" stroke-width="8"/>
+  <!-- envelope bait -->
+  <g transform="translate(236 120) rotate(14)">
+    <rect x="-40" y="-28" width="80" height="56" rx="10" fill="#FCE9A8"/>
+    <path d="M-40 -22 L0 8 L40 -22"/>
+  </g>
+  <path d="M206 112 L214 118" />
+</svg>

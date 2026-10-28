@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none" stroke="#0A2A3C" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+  <circle cx="200" cy="200" r="178" fill="#CDE8EF" stroke="none"/>
+  <!-- phone with code -->
+  <rect x="150" y="26" width="100" height="108" rx="16" fill="#FFFFFF"/>
+  <g fill="#007A99" stroke="none">
+    <circle cx="170" cy="66" r="6"/><circle cx="186" cy="66" r="6"/><circle cx="202" cy="66" r="6"/>
+    <circle cx="218" cy="66" r="6"/><circle cx="234" cy="66" r="6"/>
+  </g>
+  <rect x="172" y="92" width="56" height="16" rx="8" fill="#FCE9A8"/>
+  <!-- arrow 1 -->
+  <path d="M200 140 V176" stroke="#C8452D"/><path d="M188 166 L200 180 L212 166" stroke="#C8452D"/>
+  <!-- fake site -->
+  <rect x="86" y="184" width="228" height="82" rx="14" fill="#FFFFFF"/>
+  <path d="M86 214 V198 a14 14 0 0 1 14 -14 H300 a14 14 0 0 1 14 14 V214 Z" fill="#C8452D"/>
+  <rect x="112" y="228" width="176" height="20" rx="6" fill="#CDE8EF"/>
+  <!-- relay dots on side -->
+  <g fill="#FCE9A8"><rect x="324" y="206" width="56" height="30" rx="10"/></g>
+  <path d="M322 221 H300" stroke="#C8452D"/>
+  <!-- arrow 2 -->
+  <path d="M200 272 V304" stroke="#C8452D"/><path d="M188 294 L200 308 L212 294" stroke="#C8452D"/>
+  <!-- real service -->
+  <path d="M110 372 V338 L200 312 L290 338 V372 Z" fill="#FFFFFF"/>
+  <path d="M146 372 V348 M200 372 V344 M254 372 V348"/>
+</svg>

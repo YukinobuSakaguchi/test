@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>個人のセキュリティ対策 — パスワードとカードを守る</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700;900&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { width: 100%; height: 100%; overflow: hidden; background: #15171c; }
+
+body {
+  font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif;
+  font-weight: 900;
+  font-feature-settings: "palt";
+  color: #111;
+}
+
+#view {
+  position: fixed; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+
+#stage {
+  position: relative;
+  width: 1920px; height: 1080px;
+  flex: none;
+  overflow: hidden;
+  background: #fff;
+}
+
+#prog {
+  position: absolute; top: 0; left: 0;
+  height: 6px; width: 0;
+  background: linear-gradient(90deg, #e02fd0, #8b3bf2, #2f6bff);
+  z-index: 30;
+}
+
+#cover {
+  position: fixed; inset: 0;
+  background: rgba(13, 15, 19, 0.45);
+  backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 50; cursor: pointer;
+}
+#cover .btn {
+  background: #fff; color: #111;
+  font-size: 30px; font-weight: 900; letter-spacing: 0.1em;
+  padding: 26px 72px; border-radius: 999px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+}
+
+/* ===== スライド共通 ===== */
+.slide {
+  position: absolute; top: 0; left: 0;
+  width: 1920px;
+  height: 1080px;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: #ffffff;
+  background-image:
+    linear-gradient(to right,  rgba(110, 135, 170, 0.13) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(110, 135, 170, 0.13) 1px, transparent 1px);
+  background-size: 36px 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 120px 40px;
+}
+
+.slide::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 30px;
+  background: linear-gradient(90deg, #6d2ef0 0%, #4a51f0 50%, #2f7af5 100%);
+  z-index: 2;
+}
+
+.slide::before {
+  content: '+';
+  position: absolute;
+  top: 44px; left: 66px;
+  font-size: 48px;
+  font-weight: 500;
+  line-height: 1;
+  color: #c9d2df;
+  text-shadow: 1760px 0 #c9d2df, 0 906px #c9d2df, 1760px 906px #c9d2df;
+}
+
+/* ===== 共通パーツ ===== */
+.chip {
+  display: inline-block;
+  background: linear-gradient(90deg, #6d2ef0, #2f7af5);
+  color: #fff;
+  font-size: 33px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  padding: 14px 52px 16px;
+  border-radius: 999px;
+  margin-bottom: 44px;
+}
+
+.kicker {
+  font-size: 54px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  line-height: 1.45;
+  margin-bottom: 64px;
+}
+
+.small {
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  margin-bottom: 20px;
+}
+
+.hl {
+  display: inline-block;
+  background: #ffe83c;
+  padding: 10px 44px 14px;
+  font-size: 96px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  white-space: nowrap;
+  border-radius: 6px;
+  transform: rotate(-1deg);
+  margin-bottom: 70px;
+}
+
+.hl-sm { font-size: 80px; }
+
+.grad {
+  background: linear-gradient(100deg, #e02fd0 0%, #8b3bf2 45%, #2f6bff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.pink { color: #e92bbd; }
+
+.sub {
+  font-size: 47px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+}
+
+.note {
+  font-size: 31px;
+  font-weight: 700;
+  color: #8a94a6;
+  letter-spacing: 0.06em;
+}
+
+.slide .ghost {
+  position: absolute;
+  z-index: -1;
+  top: -110px;
+  right: 30px;
+  font-size: 600px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  background: linear-gradient(120deg, #e02fd0, #2f6bff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: 0.11;
+}
+
+.slide .foot-l, .slide .foot-r {
+  position: absolute;
+  bottom: 56px;
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: #9aa4b5;
+  z-index: 2;
+}
+.slide .foot-l { left: 84px; }
+.slide .foot-r { right: 84px; }
+.slide .foot-r b { color: #111; }
+
+.cards { display: flex; align-items: center; justify-content: center; gap: 56px; margin-bottom: 70px; }
+.card {
+  background: #fff;
+  border: 4px solid #111;
+  border-radius: 28px;
+  padding: 38px 64px 44px;
+  box-shadow: 0 16px 36px rgba(17, 24, 39, 0.10);
+}
+.card .label { font-size: 34px; font-weight: 700; color: #6b7280; margin-bottom: 10px; }
+.card .value { font-size: 88px; font-weight: 900; letter-spacing: 0.01em; white-space: nowrap; line-height: 1.2; }
+.card-y { box-shadow: 0 28px 64px rgba(124, 58, 237, 0.26), 0 10px 22px rgba(224, 47, 208, 0.12); }
+.card-grad {
+  border: 4px solid transparent;
+  background: linear-gradient(#fff, #fff) padding-box,
+              linear-gradient(120deg, #e02fd0, #8b3bf2, #2f6bff) border-box;
+}
+.cards .arrow {
+  font-size: 100px;
+  font-weight: 900;
+  background: linear-gradient(90deg, #e02fd0, #2f6bff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.s1 .eyebrow {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.38em;
+  color: #8a94a6;
+  margin-bottom: 64px;
+}
+.s1 .title {
+  font-size: 178px;
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 1.12;
+  margin-bottom: 56px;
+}
+.s1 .sub { font-size: 56px; margin-bottom: 90px; }
+.s1 .pill {
+  display: inline-block;
+  border: 3px solid #111;
+  border-radius: 999px;
+  padding: 14px 52px 16px;
+  font-size: 31px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+}
+.s1 .ghost { top: auto; bottom: -150px; right: -30px; font-size: 980px; opacity: 0.10; }
+
+.stamp {
+  position: absolute;
+  top: 120px;
+  right: 170px;
+  border: 6px solid #e92bbd;
+  border-radius: 14px;
+  color: #e92bbd;
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  padding: 16px 36px 18px 44px;
+  transform: rotate(9deg);
+  opacity: 0.9;
+  z-index: 1;
+}
+
+.gr .big {
+  font-size: 104px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 1.38;
+  margin-bottom: 64px;
+}
+
+.num .label { font-size: 42px; font-weight: 700; color: #6b7280; margin-bottom: 4px; }
+.num .big {
+  font-size: 200px;
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 1.15;
+  margin-bottom: 28px;
+}
+.meter {
+  width: 1000px;
+  height: 30px;
+  background: #e8ecf3;
+  border-radius: 999px;
+  margin-bottom: 72px;
+  overflow: hidden;
+}
+.meter .fill {
+  width: 80.3%;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #e02fd0, #8b3bf2, #2f6bff);
+}
+
+.tags { display: flex; justify-content: center; gap: 30px; margin-bottom: 64px; }
+.tag {
+  background: #111;
+  color: #fff;
+  border-radius: 16px;
+  padding: 18px 42px 22px;
+  font-size: 37px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+.tag .x { color: #ff5ad1; margin-right: 14px; }
+
+.price .cards { gap: 64px; }
+.price .card { min-width: 440px; padding: 54px 70px 60px; }
+.price .card .label { font-size: 36px; letter-spacing: 0.32em; text-indent: 0.32em; margin-bottom: 6px; }
+.price .value { font-size: 136px; }
+
+.hl-wrap { position: relative; display: inline-block; margin-bottom: 70px; }
+.hl-wrap .hl { margin-bottom: 0; }
+.now {
+  position: absolute;
+  top: -86px;
+  right: -110px;
+  width: 178px;
+  height: 178px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e02fd0, #6d2ef0);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 46px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  transform: rotate(12deg);
+  box-shadow: 10px 10px 0 rgba(17, 24, 39, 0.08);
+  z-index: 1;
+}
+
+.s10 .action { font-size: 56px; margin-bottom: 0; transform: rotate(-0.6deg); }
+</style>
+<style id="theme">
+/* ============================================================
+   slide-deck テーマ層（2026-09-23）
+   template.html のstyle要素（エンジン）は変えずに、配色と書体だけを差し替える。
+   使い方: template.html のエンジンのstyle要素の直後に、このファイルの中身を
+           id="theme" のstyle要素として貼り、body要素に data-theme="F" などを付ける。
+           （このコメントにHTMLの閉じタグを書かない。貼ったときにstyle要素が途中で閉じるため）
+   data-theme: signature（従来のピンク→紫→青。明示されたときだけ）/ A / C / D / E / F
+   色の値は ../../unify-document-theme/assets/theme-tokens.json と同じ（正本はあちら）。
+   B（濃紺・暗い地）はエンジンの黒文字・黒枠と合わないため、このテンプレートでは使わない。
+   書体は "Yu Gothic"（Mediumを名指ししない）。エンジンが font-weight 500〜900 を指定するので、
+   ファミリー名で指定すると太さに合った游ゴシック（Medium/Bold）が選ばれる。Medium名指しは太字が合成になる。
+   ============================================================ */
+
+body[data-theme="A"] { --t-bg:#F7F6F0; --t-ink:#0A1E3E; --t-muted:#5E6878; --t-main:#0A1E3E; --t-dp:#071630;
+  --t-pl:#DDE2EA; --t-accent:#A67C00; --t-marker:#E5D5A8; --t-rule:#D9D2BC; --t-grid:0; --t-radius:8px;
+  --t-font:"Yu Gothic","游ゴシック",YuGothic,"Hiragino Sans",Meiryo,"Noto Sans JP",sans-serif;
+  --t-head:"Yu Mincho","游明朝",YuMincho,"Hiragino Mincho ProN","Noto Serif JP",serif; }
+body[data-theme="C"] { --t-bg:#FFFFFF; --t-ink:#1E1E1E; --t-muted:#5F6B70; --t-main:#007A99; --t-dp:#0A2A3C;
+  --t-pl:#CDE8EF; --t-accent:#B7791F; --t-marker:#FCE9A8; --t-rule:#D5DDE0; --t-grid:1; --t-radius:8px;
+  --t-font:"Yu Gothic","游ゴシック",YuGothic,"Hiragino Sans",Meiryo,"Noto Sans JP",sans-serif; --t-head:var(--t-font); }
+body[data-theme="D"] { --t-bg:#F1F0EA; --t-ink:#22282E; --t-muted:#5A6067; --t-main:#00784A; --t-dp:#005A37;
+  --t-pl:#D5EADF; --t-accent:#B85038; --t-marker:#F3D9CF; --t-rule:#D8D6CE; --t-grid:0; --t-radius:12px;
+  --t-font:"Hiragino Sans","Yu Gothic","游ゴシック",YuGothic,Meiryo,"Noto Sans JP",sans-serif; --t-head:var(--t-font); }
+body[data-theme="E"] { --t-bg:#FAF8F0; --t-ink:#0A2340; --t-muted:#5A6779; --t-main:#3D6FA8; --t-dp:#0A2340;
+  --t-pl:#DCE7F3; --t-accent:#B77F00; --t-marker:#FCE9A8; --t-rule:#D5DEE6; --t-grid:1; --t-radius:22px;
+  --t-font:"Yu Gothic","游ゴシック",YuGothic,"Hiragino Sans",Meiryo,"Noto Sans JP",sans-serif; --t-head:var(--t-font); }
+body[data-theme="F"] { --t-bg:#FFFFFF; --t-ink:#222222; --t-muted:#5F6F78; --t-main:#1976D2; --t-dp:#1565C0;
+  --t-pl:#C5DEF7; --t-accent:#1976D2; --t-marker:#C5DEF7; --t-rule:#D9DEE3; --t-grid:0; --t-radius:0px;
+  --t-font:"Yu Gothic","游ゴシック",YuGothic,"Hiragino Sans",Meiryo,"Noto Sans JP",sans-serif; --t-head:var(--t-font); }
+
+/* ---------- 共通の差し替え（signature 以外）---------- */
+body[data-theme]:not([data-theme="signature"]) { font-family:var(--t-font); color:var(--t-ink); }
+body[data-theme]:not([data-theme="signature"]) .s1 .title,
+body[data-theme]:not([data-theme="signature"]) .kicker,
+body[data-theme]:not([data-theme="signature"]) .gr .big { font-family:var(--t-head); }
+
+/* 地: 生成り・白。方眼は薄い罫だけ（--t-grid:0 のテーマは消す） */
+body[data-theme]:not([data-theme="signature"]) .slide { background-color:var(--t-bg); }
+body[data-theme="A"] .slide, body[data-theme="D"] .slide, body[data-theme="F"] .slide { background-image:none; }
+body[data-theme]:not([data-theme="signature"]) .slide::before { color:var(--t-rule); text-shadow:1760px 0 var(--t-rule), 0 906px var(--t-rule), 1760px 906px var(--t-rule); }
+
+/* グラデーションをやめ、主色の単色にする（AIっぽさの最大の兆候を消す） */
+body[data-theme]:not([data-theme="signature"]) #prog,
+body[data-theme]:not([data-theme="signature"]) .slide::after,
+body[data-theme]:not([data-theme="signature"]) .meter .fill,
+body[data-theme]:not([data-theme="signature"]) .chip,
+body[data-theme]:not([data-theme="signature"]) .now { background:var(--t-main); }
+body[data-theme]:not([data-theme="signature"]) .slide::after { height:12px; }
+body[data-theme]:not([data-theme="signature"]) .grad,
+body[data-theme]:not([data-theme="signature"]) .cards .arrow {
+  background:none; -webkit-background-clip:border-box; background-clip:border-box; color:var(--t-main); }
+body[data-theme]:not([data-theme="signature"]) .slide .ghost {
+  background:none; -webkit-background-clip:border-box; background-clip:border-box; color:var(--t-pl); opacity:.6; }
+body[data-theme]:not([data-theme="signature"]) .pink { color:var(--t-accent); }
+
+/* マーカー・カード・タグ: 影を消し、枠は細く淡く */
+body[data-theme]:not([data-theme="signature"]) .hl { background:var(--t-marker); transform:none; border-radius:4px; }
+body[data-theme]:not([data-theme="signature"]) .s10 .action { transform:none; }
+body[data-theme]:not([data-theme="signature"]) .card { border:2px solid var(--t-rule); border-radius:var(--t-radius); box-shadow:none; background:#fff; }
+body[data-theme]:not([data-theme="signature"]) .card-y { box-shadow:none; border-color:var(--t-main); }
+body[data-theme]:not([data-theme="signature"]) .card-grad { border:3px solid var(--t-main); background:#fff; }
+body[data-theme]:not([data-theme="signature"]) .card .label,
+body[data-theme]:not([data-theme="signature"]) .num .label,
+body[data-theme]:not([data-theme="signature"]) .note,
+body[data-theme]:not([data-theme="signature"]) .s1 .eyebrow,
+body[data-theme]:not([data-theme="signature"]) .slide .foot-l,
+body[data-theme]:not([data-theme="signature"]) .slide .foot-r { color:var(--t-muted); }
+body[data-theme]:not([data-theme="signature"]) .slide .foot-r b { color:var(--t-ink); }
+body[data-theme]:not([data-theme="signature"]) .tag { background:var(--t-dp); border-radius:var(--t-radius); }
+body[data-theme]:not([data-theme="signature"]) .tag .x { color:var(--t-marker); }
+body[data-theme]:not([data-theme="signature"]) .s1 .pill { border-color:var(--t-ink); }
+body[data-theme]:not([data-theme="signature"]) .stamp { border-color:var(--t-accent); color:var(--t-accent); }
+body[data-theme]:not([data-theme="signature"]) .now { box-shadow:none; }
+body[data-theme]:not([data-theme="signature"]) .meter { background:var(--t-pl); }
+
+</style>
+<style id="deck">
+/* ===== deck additions（エンジンのCSS/JSは未改変。この資料用の追加レイアウトのみ） ===== */
+.row{display:flex;align-items:center;justify-content:center;gap:64px}
+.col{display:flex;flex-direction:column;align-items:center}
+.col.l{align-items:flex-start;text-align:left}
+.ill{flex:none;width:400px;height:400px;display:block}
+.ill-sm{width:340px;height:340px}
+.ill-xs{width:200px;height:200px;margin:0 auto 6px}
+.src{position:absolute;left:128px;right:84px;bottom:100px;text-align:left;font-size:24px;font-weight:500;letter-spacing:.03em;color:var(--t-muted);z-index:2}
+.flow{display:flex;flex-direction:column;gap:30px;font-size:36px;font-weight:700;color:var(--t-ink);line-height:1.4}
+.flow .f1{text-align:left}
+.flow .f2{text-align:right}
+.card .desc{font-size:30px;margin-top:14px;margin-bottom:0;line-height:1.5}
+.grid2{display:grid;grid-template-columns:repeat(2,700px);gap:24px 40px}
+.grid2 .card{padding:22px 36px 26px}
+.grid2 .card .value{font-size:76px}
+.refs{text-align:left;font-size:27px;font-weight:500;line-height:1.55;max-width:1640px}
+.refs p{margin-bottom:12px}
+.refs b{font-weight:900;color:var(--t-main);margin-right:.5em}
+.refs .warn b{color:var(--t-accent)}
+</style>
+</head>
+<body data-theme="C">
+
+<div id="view">
+<div id="stage">
+
+<!-- 1. 表紙 -->
+<div class="slide s1" data-dur="12000">
+  <div class="eyebrow" data-anim="rise" data-delay="0" style="margin-bottom:36px;">PASSWORD &amp; CARD LEAK ─ 2026.10</div>
+  <div class="row">
+    <div class="col l">
+      <div class="title grad" data-anim="pop" data-delay="200" data-len="750" style="font-size:132px;margin-bottom:40px;">そのパスワード、<br>漏れているかも</div>
+      <div class="sub" data-anim="rise" data-delay="500" style="font-size:48px;margin-bottom:52px;">ニュースから考える、個人の守り方</div>
+      <div class="pill" data-anim="rise" data-delay="700">8分でわかる</div>
+    </div>
+    <img class="ill" data-anim="pop" data-delay="400" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgNDAwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwQTJBM0MiIHN0cm9rZS13aWR0aD0iNiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICA8Y2lyY2xlIGN4PSIyMDAiIGN5PSIyMDAiIHI9IjE3OCIgZmlsbD0iI0NERThFRiIgc3Ryb2tlPSJub25lIi8+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjA0IDE5Nikgcm90YXRlKC0zMikiPgogICAgPCEtLSBoZWFkIC0tPgogICAgPGNpcmNsZSBjeD0iLTEyMCIgY3k9IjAiIHI9IjU4IiBmaWxsPSIjRkNFOUE4Ii8+CiAgICA8Y2lyY2xlIGN4PSItMTIwIiBjeT0iMCIgcj0iMjAiIGZpbGw9IiNDREU4RUYiLz4KICAgIDwhLS0gc2hhZnQgbGVmdCBwaWVjZSAoYnJva2VuIGVkZ2UpIC0tPgogICAgPHBhdGggZD0iTS02NCAtMTYgSDM0IEwyMiAtMiBMMzggMTAgTDI2IDE2IEgtNjQgWiIgZmlsbD0iI0ZDRTlBOCIvPgogICAgPCEtLSBzaGFmdCByaWdodCBwaWVjZSwgc2hpZnRlZCBhbmQgdGlsdGVkIC0tPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjYgMjApIHJvdGF0ZSg5KSI+CiAgICAgIDxwYXRoIGQ9Ik0zNCAtMTYgTDQ4IC00IEw0MCA2IEw1MiAxNiBIMTUwIFYtMTYgWiIgZmlsbD0iI0ZDRTlBOCIvPgogICAgICA8cGF0aCBkPSJNOTYgMTYgVjQ4IEgxMTYgVjE2IiBmaWxsPSIjRkNFOUE4Ii8+CiAgICAgIDxwYXRoIGQ9Ik0xMjggMTYgVjM2IEgxNDYgVjE2IiBmaWxsPSIjRkNFOUE4Ii8+CiAgICA8L2c+CiAgPC9nPgogIDwhLS0gY3JhY2sgc3BhcmtzIC0tPgogIDxwYXRoIGQ9Ik0xOTggMTc2IEwxODYgMTUwIiBzdHJva2U9IiNDODQ1MkQiLz4KICA8cGF0aCBkPSJNMjIyIDE4MiBMMjQwIDE2MCIgc3Ryb2tlPSIjQzg0NTJEIi8+CiAgPHBhdGggZD0iTTIwOCAyMzIgTDIwNCAyNjIiIHN0cm9rZT0iI0M4NDUyRCIvPgogIDxjaXJjbGUgY3g9IjE3NiIgY3k9IjI3MCIgcj0iNyIgZmlsbD0iI0M4NDUyRCIgc3Ryb2tlPSJub25lIi8+CiAgPGNpcmNsZSBjeD0iMjYyIiBjeT0iMTUwIiByPSI2IiBmaWxsPSIjQzg0NTJEIiBzdHJva2U9Im5vbmUiLz4KICA8Y2lyY2xlIGN4PSIxNTAiIGN5PSIxMjAiIHI9IjUiIGZpbGw9IiMwMDdBOTkiIHN0cm9rZT0ibm9uZSIvPgo8L3N2Zz4K" alt="割れた鍵のイラスト">
+  </div>
+  <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
+  <div class="foot-r"><b>01</b> / 10</div>
+</div>
+
+<!-- 2. ニュース: 2,252万件 -->
+<div class="slide num" data-dur="30000">
+  <div class="chip" data-anim="rise" data-delay="0">ニュース</div>
+  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:20px;">パスワードを含む会員情報が流出の可能性</div>
+  <div class="row">
+    <img class="ill" data-anim="pop" data-delay="300" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgNDAwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwQTJBM0MiIHN0cm9rZS13aWR0aD0iNiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICA8Y2lyY2xlIGN4PSIyMDAiIGN5PSIyMDAiIHI9IjE3OCIgZmlsbD0iI0NERThFRiIgc3Ryb2tlPSJub25lIi8+CiAgPCEtLSBkYXRhYmFzZSAtLT4KICA8cGF0aCBkPSJNNzAgMTIwIFYyODAgQzcwIDMwNCAxMTggMzIyIDE3MCAzMjIgQzIyMiAzMjIgMjcwIDMwNCAyNzAgMjgwIFYxMjAiIGZpbGw9IiNGRkZGRkYiLz4KICA8ZWxsaXBzZSBjeD0iMTcwIiBjeT0iMTIwIiByeD0iMTAwIiByeT0iMzAiIGZpbGw9IiMwMDdBOTkiLz4KICA8cGF0aCBkPSJNNzAgMTc2IEM3MCAyMDAgMTE4IDIxOCAxNzAgMjE4IEMyMjIgMjE4IDI3MCAyMDAgMjcwIDE3NiIgLz4KICA8cGF0aCBkPSJNNzAgMjMyIEM3MCAyNTYgMTE4IDI3NCAxNzAgMjc0IEMyMjIgMjc0IDI3MCAyNTYgMjcwIDIzMiIgLz4KICA8IS0tIGNyYWNrIC0tPgogIDxwYXRoIGQ9Ik0yNTAgMTUwIEwyMzIgMTg4IEwyNTYgMjA0IEwyMzggMjQ2IiBzdHJva2U9IiNDODQ1MkQiIHN0cm9rZS13aWR0aD0iOCIvPgogIDwhLS0gZmx5aW5nIHRpbGVzIC0tPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDMwMCA5Nikgcm90YXRlKDEwKSI+CiAgICA8cmVjdCB4PSItMzQiIHk9Ii0yOCIgd2lkdGg9IjY4IiBoZWlnaHQ9IjU2IiByeD0iMTIiIGZpbGw9IiNGQ0U5QTgiLz4KICAgIDxwYXRoIGQ9Ik0tMjAgLTE0IEwwIDQgTDIwIC0xNCBNLTIwIDE0IFYtMTQgSDIwIFYxNCBaIi8+CiAgPC9nPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDMyMiAyMDYpIHJvdGF0ZSgtOCkiPgogICAgPHJlY3QgeD0iLTM0IiB5PSItMzAiIHdpZHRoPSI2OCIgaGVpZ2h0PSI2MCIgcng9IjEyIiBmaWxsPSIjRkNFOUE4Ii8+CiAgICA8Y2lyY2xlIGN4PSItOCIgY3k9Ii00IiByPSIxMSIvPgogICAgPHBhdGggZD0iTTIgLTQgSDIyIE0xNCAtNCBWOCBNMjIgLTQgVjYiLz4KICA8L2c+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjk2IDMxMikgcm90YXRlKDYpIj4KICAgIDxyZWN0IHg9Ii0zNCIgeT0iLTI4IiB3aWR0aD0iNjgiIGhlaWdodD0iNTYiIHJ4PSIxMiIgZmlsbD0iI0ZDRTlBOCIvPgogICAgPHJlY3QgeD0iLTIwIiB5PSItMTQiIHdpZHRoPSI0MCIgaGVpZ2h0PSIyOCIgcng9IjUiLz4KICAgIDxwYXRoIGQ9Ik0tMjAgLTQgSDIwIi8+CiAgPC9nPgogIDxjaXJjbGUgY3g9IjI3NiIgY3k9IjE1MCIgcj0iNiIgZmlsbD0iI0M4NDUyRCIgc3Ryb2tlPSJub25lIi8+CiAgPGNpcmNsZSBjeD0iMzUyIiBjeT0iMTQ2IiByPSI2IiBmaWxsPSIjQzg0NTJEIiBzdHJva2U9Im5vbmUiLz4KICA8Y2lyY2xlIGN4PSIyNzAiIGN5PSIyNjIiIHI9IjYiIGZpbGw9IiNDODQ1MkQiIHN0cm9rZT0ibm9uZSIvPgo8L3N2Zz4K" alt="データベースから情報が漏れるイラスト">
+    <div class="col">
+      <div class="label" data-anim="rise" data-delay="320">ソースネクスト　2026年10月15日公表</div>
+      <div class="big grad" data-anim="pop" data-delay="550" data-len="800" style="margin-bottom:24px;">2,252万件</div>
+      <div class="tags" style="margin-bottom:0;">
+        <div class="tag" data-anim="pop" data-delay="1000">メールアドレス</div>
+        <div class="tag" data-anim="pop" data-delay="1130">パスワード</div>
+        <div class="tag" data-anim="pop" data-delay="1260">氏名・住所</div>
+      </div>
+    </div>
+  </div>
+  <div class="sub" data-anim="rise" data-delay="1750" style="margin-top:16px;">カード情報は<span class="pink">対象外</span>と発表。<br>何が漏れたかで、取る対策が変わります</div>
+  <div class="src">出典: 同社発表を報じたScanNetSecurity(2026-10-20)ほか。件数は「流出した可能性」で、対象項目は登録状況により異なる</div>
+  <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
+  <div class="foot-r"><b>02</b> / 10</div>
+</div>
+
+<!-- 3. 実態: フィッシング -->
+<div class="slide" data-dur="30000">
+  <div class="chip" data-anim="rise" data-delay="0">実態</div>
+  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:36px;">盗まれるのは、サイトからだけではない</div>
+  <div class="row" style="margin-bottom:40px;">
+    <img class="ill ill-sm" data-anim="pop" data-delay="300" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgNDAwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwQTJBM0MiIHN0cm9rZS13aWR0aD0iNiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICA8Y2lyY2xlIGN4PSIyMDAiIGN5PSIyMDAiIHI9IjE3OCIgZmlsbD0iI0NERThFRiIgc3Ryb2tlPSJub25lIi8+CiAgPCEtLSBmYWtlIGxvZ2luIHdpbmRvdyAtLT4KICA8cmVjdCB4PSI2NCIgeT0iMTc2IiB3aWR0aD0iMjcyIiBoZWlnaHQ9IjE3NiIgcng9IjE4IiBmaWxsPSIjRkZGRkZGIi8+CiAgPHBhdGggZD0iTTY0IDIxNCBWMTk0IGExOCAxOCAwIDAgMSAxOCAtMTggSDMxOCBhMTggMTggMCAwIDEgMTggMTggVjIxNCBaIiBmaWxsPSIjQzg0NTJEIi8+CiAgPGNpcmNsZSBjeD0iOTAiIGN5PSIxOTUiIHI9IjUiIGZpbGw9IiNGRkZGRkYiIHN0cm9rZT0ibm9uZSIvPgogIDxjaXJjbGUgY3g9IjExMCIgY3k9IjE5NSIgcj0iNSIgZmlsbD0iI0ZGRkZGRiIgc3Ryb2tlPSJub25lIi8+CiAgPGNpcmNsZSBjeD0iMTMwIiBjeT0iMTk1IiByPSI1IiBmaWxsPSIjRkZGRkZGIiBzdHJva2U9Im5vbmUiLz4KICA8cmVjdCB4PSI5NCIgeT0iMjM4IiB3aWR0aD0iMjEyIiBoZWlnaHQ9IjI4IiByeD0iOCIgZmlsbD0iI0NERThFRiIvPgogIDxyZWN0IHg9Ijk0IiB5PSIyNzgiIHdpZHRoPSIyMTIiIGhlaWdodD0iMjgiIHJ4PSI4IiBmaWxsPSIjQ0RFOEVGIi8+CiAgPHJlY3QgeD0iOTQiIHk9IjMxOCIgd2lkdGg9IjkwIiBoZWlnaHQ9IjIyIiByeD0iOCIgZmlsbD0iI0ZDRTlBOCIvPgogIDxjaXJjbGUgY3g9IjExMiIgY3k9IjI1MiIgcj0iNCIgZmlsbD0iIzBBMkEzQyIgc3Ryb2tlPSJub25lIi8+PGNpcmNsZSBjeD0iMTI4IiBjeT0iMjUyIiByPSI0IiBmaWxsPSIjMEEyQTNDIiBzdHJva2U9Im5vbmUiLz48Y2lyY2xlIGN4PSIxNDQiIGN5PSIyNTIiIHI9IjQiIGZpbGw9IiMwQTJBM0MiIHN0cm9rZT0ibm9uZSIvPgogIDwhLS0gaG9vayBhbmQgbGluZSAtLT4KICA8cGF0aCBkPSJNMjAwIDIyIFYxMDQiIC8+CiAgPHBhdGggZD0iTTIwMCAxMDQgVjEyMiBDMjAwIDE1MCAxNjQgMTU0IDE2MiAxMjggTDE3MiAxMzgiIHN0cm9rZT0iI0M4NDUyRCIgc3Ryb2tlLXdpZHRoPSI4Ii8+CiAgPCEtLSBlbnZlbG9wZSBiYWl0IC0tPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDIzNiAxMjApIHJvdGF0ZSgxNCkiPgogICAgPHJlY3QgeD0iLTQwIiB5PSItMjgiIHdpZHRoPSI4MCIgaGVpZ2h0PSI1NiIgcng9IjEwIiBmaWxsPSIjRkNFOUE4Ii8+CiAgICA8cGF0aCBkPSJNLTQwIC0yMiBMMCA4IEw0MCAtMjIiLz4KICA8L2c+CiAgPHBhdGggZD0iTTIwNiAxMTIgTDIxNCAxMTgiIC8+Cjwvc3ZnPgo=" alt="偽のログイン画面に釣り針が垂れるイラスト">
+    <div class="cards" style="margin-bottom:0;">
+      <div class="card card-y" data-anim="pop" data-delay="520">
+        <div class="label">ネット不正送金（2025年）</div>
+        <div class="value grad">約104億円</div>
+      </div>
+      <div class="card card-y" data-anim="pop" data-delay="700">
+        <div class="label">フィッシング報告（2025年）</div>
+        <div class="value grad">245万件</div>
+      </div>
+    </div>
+  </div>
+  <div class="sub" data-anim="rise" data-delay="1500">手口の約9割はフィッシング。<br>偽サイトに<span class="pink">自分で入力</span>して、渡してしまいます</div>
+  <div class="src">出典: 警察庁の2025年統計（2026-03報道）。不正送金は約103.97億円、フィッシング報告は245万4,297件</div>
+  <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
+  <div class="foot-r"><b>03</b> / 10</div>
+</div>
+
+<!-- 4. カード不正利用 -->
+<div class="slide num" data-dur="30000">
+  <div class="chip" data-anim="rise" data-delay="0">カード</div>
+  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:20px;">カードの不正利用は、年510億円超</div>
+  <div class="row" style="margin-bottom:20px;">
+    <img class="ill" data-anim="pop" data-delay="300" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgNDAwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwQTJBM0MiIHN0cm9rZS13aWR0aD0iNiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICA8Y2lyY2xlIGN4PSIyMDAiIGN5PSIyMDAiIHI9IjE3OCIgZmlsbD0iI0NERThFRiIgc3Ryb2tlPSJub25lIi8+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTkwIDE5MCkgcm90YXRlKC04KSI+CiAgICA8cmVjdCB4PSItMTQwIiB5PSItODgiIHdpZHRoPSIyODAiIGhlaWdodD0iMTc2IiByeD0iMjQiIGZpbGw9IiMwMDdBOTkiLz4KICAgIDxyZWN0IHg9Ii0xNDAiIHk9Ii01NiIgd2lkdGg9IjI4MCIgaGVpZ2h0PSIzMCIgZmlsbD0iIzBBMkEzQyIvPgogICAgPHJlY3QgeD0iLTExMiIgeT0iLTQiIHdpZHRoPSI1MiIgaGVpZ2h0PSI0MCIgcng9IjkiIGZpbGw9IiNGQ0U5QTgiLz4KICAgIDxwYXRoIGQ9Ik0tMTEyIDE2IEgtNjAgTS04NiAtNCBWMzYiLz4KICAgIDxnIGZpbGw9IiNGRkZGRkYiIHN0cm9rZT0ibm9uZSI+CiAgICAgIDxjaXJjbGUgY3g9Ii0xMTAiIGN5PSI2MiIgcj0iNiIvPjxjaXJjbGUgY3g9Ii05MCIgY3k9IjYyIiByPSI2Ii8+PGNpcmNsZSBjeD0iLTcwIiBjeT0iNjIiIHI9IjYiLz48Y2lyY2xlIGN4PSItNTAiIGN5PSI2MiIgcj0iNiIvPgogICAgICA8Y2lyY2xlIGN4PSItMjAiIGN5PSI2MiIgcj0iNiIvPjxjaXJjbGUgY3g9IjAiIGN5PSI2MiIgcj0iNiIvPjxjaXJjbGUgY3g9IjIwIiBjeT0iNjIiIHI9IjYiLz48Y2lyY2xlIGN4PSI0MCIgY3k9IjYyIiByPSI2Ii8+CiAgICA8L2c+CiAgPC9nPgogIDwhLS0gd2FybmluZyBiYWRnZSAtLT4KICA8cGF0aCBkPSJNMjkwIDIxNCBMMzUyIDMyMiBIMjI4IFoiIGZpbGw9IiNDODQ1MkQiLz4KICA8cmVjdCB4PSIyODUiIHk9IjI1MCIgd2lkdGg9IjEwIiBoZWlnaHQ9IjM2IiByeD0iNSIgZmlsbD0iI0ZGRkZGRiIgc3Ryb2tlPSJub25lIi8+CiAgPGNpcmNsZSBjeD0iMjkwIiBjeT0iMzAyIiByPSI2IiBmaWxsPSIjRkZGRkZGIiBzdHJva2U9Im5vbmUiLz4KPC9zdmc+Cg==" alt="警告マーク付きのクレジットカードのイラスト">
+    <div class="col">
+      <div class="label" data-anim="rise" data-delay="320">不正利用のうち、フィッシングが原因と推計される割合</div>
+      <div class="big grad" data-anim="count" data-count="75" data-delay="550" data-len="1200">75%</div>
+      <div class="meter" data-anim="rise" data-delay="400" style="margin-bottom:0;"><div class="fill" data-anim="fill" data-w="75" data-delay="650" data-len="1200"></div></div>
+    </div>
+  </div>
+  <div class="sub" data-anim="rise" data-delay="1850">2025年の被害は510.5億円。2026年4〜6月は107.7億円で、<br>うち<span class="pink">番号盗用が100.1億円</span></div>
+  <div class="src">出典: 日本クレジット協会・日本クレジットカード協会（別団体の数値を併記、報道ベース）。75%はフィッシング起因の推計</div>
+  <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
+  <div class="foot-r"><b>04</b> / 10</div>
+</div>
+
+<!-- 5. 中扉: 強いパスワード -->
+<div class="slide" data-dur="35000">
+  <div class="chip" data-anim="rise" data-delay="0">対策 1</div>
+  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:40px;">強いパスワードにすれば安心？</div>
+  <div class="row">
+    <img class="ill" data-anim="pop" data-delay="300" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgNDAwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwQTJBM0MiIHN0cm9rZS13aWR0aD0iNiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICA8Y2lyY2xlIGN4PSIyMDAiIGN5PSIyMDAiIHI9IjE3OCIgZmlsbD0iI0NERThFRiIgc3Ryb2tlPSJub25lIi8+CiAgPCEtLSBvbmUga2V5IC0tPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI0IDE1MCkiPgogICAgPGNpcmNsZSBjeD0iNDIiIGN5PSI1MCIgcj0iMzgiIGZpbGw9IiNGQ0U5QTgiLz4KICAgIDxjaXJjbGUgY3g9IjQyIiBjeT0iNTAiIHI9IjEyIiBmaWxsPSIjQ0RFOEVGIi8+CiAgICA8cGF0aCBkPSJNNzggNTAgSDEzOCBNMTEyIDUwIFY3NCBNMTMwIDUwIFY2OCIgc3Ryb2tlLXdpZHRoPSIxMiIvPgogIDwvZz4KICA8IS0tIGNvbm5lY3RvcnMgLS0+CiAgPGcgc3Ryb2tlPSIjQzg0NTJEIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1kYXNoYXJyYXk9IjMgMTIiPgogICAgPHBhdGggZD0iTTE2OCAxOTYgQyAyMDAgMTk2IDIwNiAxMzYgMjM2IDEzNiIvPgogICAgPHBhdGggZD0iTTE2OCAyMDQgQyAyMDAgMjA0IDIwNiAyNjIgMjM2IDI2MiIvPgogICAgPHBhdGggZD0iTTE2OCAxOTggQyAyMTAgMTk4IDI1MCAxNzAgMzAwIDE3MCIgc3Ryb2tlPSJub25lIi8+CiAgPC9nPgogIDwhLS0gZm91ciBvcGVuIHBhZGxvY2tzICgyIHggMikgLS0+CiAgPGcgaWQ9ImxvY2sxIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyMzYgNzgpIj4KICAgIDxwYXRoIGQ9Ik0xMiAzMCBWMTggYTE4IDE4IDAgMCAxIDM2IDAgVjgiIGZpbGw9Im5vbmUiLz4KICAgIDxyZWN0IHg9IjAiIHk9IjMwIiB3aWR0aD0iNjAiIGhlaWdodD0iNDYiIHJ4PSIxMCIgZmlsbD0iI0ZGRkZGRiIvPgogICAgPGNpcmNsZSBjeD0iMzAiIGN5PSI1MCIgcj0iNiIgZmlsbD0iIzBBMkEzQyIgc3Ryb2tlPSJub25lIi8+CiAgPC9nPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDMwNiA3OCkiPgogICAgPHBhdGggZD0iTTEyIDMwIFYxOCBhMTggMTggMCAwIDEgMzYgMCBWOCIgZmlsbD0ibm9uZSIvPgogICAgPHJlY3QgeD0iMCIgeT0iMzAiIHdpZHRoPSI2MCIgaGVpZ2h0PSI0NiIgcng9IjEwIiBmaWxsPSIjRkZGRkZGIi8+CiAgICA8Y2lyY2xlIGN4PSIzMCIgY3k9IjUwIiByPSI2IiBmaWxsPSIjMEEyQTNDIiBzdHJva2U9Im5vbmUiLz4KICA8L2c+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjM2IDIxNCkiPgogICAgPHBhdGggZD0iTTEyIDMwIFYxOCBhMTggMTggMCAwIDEgMzYgMCBWOCIgZmlsbD0ibm9uZSIvPgogICAgPHJlY3QgeD0iMCIgeT0iMzAiIHdpZHRoPSI2MCIgaGVpZ2h0PSI0NiIgcng9IjEwIiBmaWxsPSIjRkZGRkZGIi8+CiAgICA8Y2lyY2xlIGN4PSIzMCIgY3k9IjUwIiByPSI2IiBmaWxsPSIjMEEyQTNDIiBzdHJva2U9Im5vbmUiLz4KICA8L2c+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzA2IDIxNCkiPgogICAgPHBhdGggZD0iTTEyIDMwIFYxOCBhMTggMTggMCAwIDEgMzYgMCBWOCIgZmlsbD0ibm9uZSIvPgogICAgPHJlY3QgeD0iMCIgeT0iMzAiIHdpZHRoPSI2MCIgaGVpZ2h0PSI0NiIgcng9IjEwIiBmaWxsPSIjRkZGRkZGIi8+CiAgICA8Y2lyY2xlIGN4PSIzMCIgY3k9IjUwIiByPSI2IiBmaWxsPSIjMEEyQTNDIiBzdHJva2U9Im5vbmUiLz4KICA8L2c+CiAgPCEtLSBleHRyYSBjb25uZWN0b3JzIHRvIHRoZSByaWdodC1oYW5kIGxvY2tzIC0tPgogIDxnIHN0cm9rZT0iI0M4NDUyRCIgc3Ryb2tlLXdpZHRoPSI1IiBzdHJva2UtZGFzaGFycmF5PSIzIDEyIj4KICAgIDxwYXRoIGQ9Ik0yOTYgMTM2IEgzMDYiLz4KICAgIDxwYXRoIGQ9Ik0yOTYgMjYyIEgzMDYiLz4KICA8L2c+Cjwvc3ZnPgo=" alt="1本の鍵で複数の南京錠が開くイラスト">
+    <div class="col l">
+      <div class="hl hl-sm" data-anim="sweep" data-delay="380" style="margin-bottom:44px;">答えは、使い回しをやめること</div>
+      <div class="sub" data-anim="rise" data-delay="1050" style="margin-bottom:28px;">サービスごとに別の<span class="pink">16文字以上</span>を<br>管理ツールに作らせ、覚えようとしない</div>
+      <div class="note" data-anim="rise" data-delay="1500">※16文字は実務上の目安。上限内で長くし、二段階認証と併用</div>
+    </div>
+  </div>
+  <div class="src">出典: レポート第2・8章（NIST SP 800-63B-4、Googleパスワードマネージャー）</div>
+  <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
+  <div class="foot-r"><b>05</b> / 10</div>
+</div>
+
+<!-- 6. 中扉: 二段階認証 -->
+<div class="slide" data-dur="35000">
+  <div class="chip" data-anim="rise" data-delay="0">対策 2</div>
+  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:36px;">二段階認証なら、もう大丈夫？</div>
+  <div class="row" style="margin-bottom:40px;">
+    <img class="ill ill-sm" data-anim="pop" data-delay="300" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgNDAwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwQTJBM0MiIHN0cm9rZS13aWR0aD0iNiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICA8Y2lyY2xlIGN4PSIyMDAiIGN5PSIyMDAiIHI9IjE3OCIgZmlsbD0iI0NERThFRiIgc3Ryb2tlPSJub25lIi8+CiAgPCEtLSBwaG9uZSB3aXRoIGNvZGUgLS0+CiAgPHJlY3QgeD0iMTUwIiB5PSIyNiIgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDgiIHJ4PSIxNiIgZmlsbD0iI0ZGRkZGRiIvPgogIDxnIGZpbGw9IiMwMDdBOTkiIHN0cm9rZT0ibm9uZSI+CiAgICA8Y2lyY2xlIGN4PSIxNzAiIGN5PSI2NiIgcj0iNiIvPjxjaXJjbGUgY3g9IjE4NiIgY3k9IjY2IiByPSI2Ii8+PGNpcmNsZSBjeD0iMjAyIiBjeT0iNjYiIHI9IjYiLz4KICAgIDxjaXJjbGUgY3g9IjIxOCIgY3k9IjY2IiByPSI2Ii8+PGNpcmNsZSBjeD0iMjM0IiBjeT0iNjYiIHI9IjYiLz4KICA8L2c+CiAgPHJlY3QgeD0iMTcyIiB5PSI5MiIgd2lkdGg9IjU2IiBoZWlnaHQ9IjE2IiByeD0iOCIgZmlsbD0iI0ZDRTlBOCIvPgogIDwhLS0gYXJyb3cgMSAtLT4KICA8cGF0aCBkPSJNMjAwIDE0MCBWMTc2IiBzdHJva2U9IiNDODQ1MkQiLz48cGF0aCBkPSJNMTg4IDE2NiBMMjAwIDE4MCBMMjEyIDE2NiIgc3Ryb2tlPSIjQzg0NTJEIi8+CiAgPCEtLSBmYWtlIHNpdGUgLS0+CiAgPHJlY3QgeD0iODYiIHk9IjE4NCIgd2lkdGg9IjIyOCIgaGVpZ2h0PSI4MiIgcng9IjE0IiBmaWxsPSIjRkZGRkZGIi8+CiAgPHBhdGggZD0iTTg2IDIxNCBWMTk4IGExNCAxNCAwIDAgMSAxNCAtMTQgSDMwMCBhMTQgMTQgMCAwIDEgMTQgMTQgVjIxNCBaIiBmaWxsPSIjQzg0NTJEIi8+CiAgPHJlY3QgeD0iMTEyIiB5PSIyMjgiIHdpZHRoPSIxNzYiIGhlaWdodD0iMjAiIHJ4PSI2IiBmaWxsPSIjQ0RFOEVGIi8+CiAgPCEtLSByZWxheSBkb3RzIG9uIHNpZGUgLS0+CiAgPGcgZmlsbD0iI0ZDRTlBOCI+PHJlY3QgeD0iMzI0IiB5PSIyMDYiIHdpZHRoPSI1NiIgaGVpZ2h0PSIzMCIgcng9IjEwIi8+PC9nPgogIDxwYXRoIGQ9Ik0zMjIgMjIxIEgzMDAiIHN0cm9rZT0iI0M4NDUyRCIvPgogIDwhLS0gYXJyb3cgMiAtLT4KICA8cGF0aCBkPSJNMjAwIDI3MiBWMzA0IiBzdHJva2U9IiNDODQ1MkQiLz48cGF0aCBkPSJNMTg4IDI5NCBMMjAwIDMwOCBMMjEyIDI5NCIgc3Ryb2tlPSIjQzg0NTJEIi8+CiAgPCEtLSByZWFsIHNlcnZpY2UgLS0+CiAgPHBhdGggZD0iTTExMCAzNzIgVjMzOCBMMjAwIDMxMiBMMjkwIDMzOCBWMzcyIFoiIGZpbGw9IiNGRkZGRkYiLz4KICA8cGF0aCBkPSJNMTQ2IDM3MiBWMzQ4IE0yMDAgMzcyIFYzNDQgTTI1NCAzNzIgVjM0OCIvPgo8L3N2Zz4K" alt="偽サイトを経由して認証コードが中継されるイラスト">
+    <div class="cards" style="margin-bottom:0;">
+      <div class="card" data-anim="pop" data-delay="520">
+        <div class="label">SMS・認証アプリのコード</div>
+        <div class="value" style="color:var(--t-muted);">中継される</div>
+      </div>
+      <div class="card card-grad card-y" data-anim="pop" data-delay="800" data-len="650">
+        <div class="label"><span class="pink">パスキー（偽サイトでは）</span></div>
+        <div class="value grad">守られる</div>
+      </div>
+    </div>
+  </div>
+  <div class="sub" data-anim="rise" data-delay="1600">コードは偽サイトで<span class="pink">転送され得ます</span>。<br>パスキーは接続先のドメインを検証します</div>
+  <div class="src">出典: レポート第3・4章（NIST SP 800-63B-4、W3C WebAuthn、日本証券業協会）</div>
+  <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
+  <div class="foot-r"><b>06</b> / 10</div>
+</div>
+
+<!-- 7. パスキーの仕組み -->
+<div class="slide" data-dur="35000">
+  <div class="chip" data-anim="rise" data-delay="0">仕組み</div>
+  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:40px;">パスキーは、パスワードを入力しない</div>
+  <div class="cards" style="margin-bottom:44px;">
+    <div class="card" data-anim="pop" data-delay="420" style="padding:30px 56px 38px;">
+      <img class="ill ill-xs" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgNDAwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwQTJBM0MiIHN0cm9rZS13aWR0aD0iNiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICA8Y2lyY2xlIGN4PSIyMDAiIGN5PSIyMDAiIHI9IjE3OCIgZmlsbD0iI0NERThFRiIgc3Ryb2tlPSJub25lIi8+CiAgPHJlY3QgeD0iMTE2IiB5PSI0OCIgd2lkdGg9IjE2OCIgaGVpZ2h0PSIzMDQiIHJ4PSIyOCIgZmlsbD0iI0ZGRkZGRiIvPgogIDxwYXRoIGQ9Ik0xNzYgNzAgSDIyNCIvPgogIDwhLS0ga2V5IG9uIHNjcmVlbiAtLT4KICA8Y2lyY2xlIGN4PSIxNzYiIGN5PSIxNjAiIHI9IjMwIiBmaWxsPSIjRkNFOUE4Ii8+CiAgPGNpcmNsZSBjeD0iMTc2IiBjeT0iMTYwIiByPSI5IiBmaWxsPSIjQ0RFOEVGIi8+CiAgPHBhdGggZD0iTTIwNiAxNjAgSDI1MiBNMjM2IDE2MCBWMTgwIE0yNTAgMTYwIFYxNzQiIHN0cm9rZS13aWR0aD0iOSIvPgogIDwhLS0gZmluZ2VycHJpbnQgLS0+CiAgPGcgc3Ryb2tlPSIjMDA3QTk5IiBzdHJva2Utd2lkdGg9IjciPgogICAgPHBhdGggZD0iTTE2MCAzMDAgYTQwIDQwIDAgMCAxIDgwIDAiLz4KICAgIDxwYXRoIGQ9Ik0xNzIgMzA2IGEyOCAyOCAwIDAgMSA1NiAwIi8+CiAgICA8cGF0aCBkPSJNMTg0IDMxMiBhMTYgMTYgMCAwIDEgMzIgMCIvPgogICAgPHBhdGggZD0iTTIwMCAzMTggVjMwMCIvPgogIDwvZz4KPC9zdmc+Cg==" alt="秘密鍵を持つスマートフォンのイラスト">
+      <div class="label">自分の端末</div>
+      <div class="value" style="font-size:80px;">秘密鍵</div>
+    </div>
+    <div class="flow" data-anim="rise" data-delay="800">
+      <div class="f1">← 今回だけの確認データ</div>
+      <div class="f2">秘密鍵で署名した結果 →</div>
+    </div>
+    <div class="card card-grad card-y" data-anim="pop" data-delay="620" data-len="650" style="padding:30px 56px 38px;">
+      <img class="ill ill-xs" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgNDAwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwQTJBM0MiIHN0cm9rZS13aWR0aD0iNiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICA8Y2lyY2xlIGN4PSIyMDAiIGN5PSIyMDAiIHI9IjE3OCIgZmlsbD0iI0NERThFRiIgc3Ryb2tlPSJub25lIi8+CiAgPHJlY3QgeD0iNzIiIHk9Ijg4IiB3aWR0aD0iMjU2IiBoZWlnaHQ9IjIyNCIgcng9IjIyIiBmaWxsPSIjRkZGRkZGIi8+CiAgPHBhdGggZD0iTTcyIDEyOCBWMTEwIGEyMiAyMiAwIDAgMSAyMiAtMjIgSDMwNiBhMjIgMjIgMCAwIDEgMjIgMjIgVjEyOCBaIiBmaWxsPSIjMDA3QTk5Ii8+CiAgPGNpcmNsZSBjeD0iMTAwIiBjeT0iMTA4IiByPSI1IiBmaWxsPSIjRkZGRkZGIiBzdHJva2U9Im5vbmUiLz48Y2lyY2xlIGN4PSIxMjAiIGN5PSIxMDgiIHI9IjUiIGZpbGw9IiNGRkZGRkYiIHN0cm9rZT0ibm9uZSIvPjxjaXJjbGUgY3g9IjE0MCIgY3k9IjEwOCIgcj0iNSIgZmlsbD0iI0ZGRkZGRiIgc3Ryb2tlPSJub25lIi8+CiAgPCEtLSBwYWRsb2NrIGNsb3NlZCAtLT4KICA8cGF0aCBkPSJNMTcwIDIyMiBWMjA0IGEzMCAzMCAwIDAgMSA2MCAwIFYyMjIiIC8+CiAgPHJlY3QgeD0iMTUwIiB5PSIyMjIiIHdpZHRoPSIxMDAiIGhlaWdodD0iNzAiIHJ4PSIxNCIgZmlsbD0iI0ZDRTlBOCIvPgogIDxjaXJjbGUgY3g9IjIwMCIgY3k9IjI1MiIgcj0iOSIgZmlsbD0iIzBBMkEzQyIgc3Ryb2tlPSJub25lIi8+CiAgPHBhdGggZD0iTTIwMCAyNTYgVjI3NCIvPgogIDwhLS0gY2hlY2sgLS0+CiAgPGNpcmNsZSBjeD0iMjkyIiBjeT0iMjc0IiByPSIyOCIgZmlsbD0iIzAwN0E5OSIvPgogIDxwYXRoIGQ9Ik0yNzggMjc0IEwyODggMjg0IEwzMDggMjYyIiBzdHJva2U9IiNGRkZGRkYiLz4KPC9zdmc+Cg==" alt="公開鍵を登録した本物のサービスのイラスト">
+      <div class="label">本物のサービス</div>
+      <div class="value grad" style="font-size:80px;">公開鍵</div>
+    </div>
+  </div>
+  <div class="sub" data-anim="rise" data-delay="1500">鍵そのものは送りません。指紋・顔・PINは<span class="pink">使用の許可</span>だけ</div>
+  <div class="src">出典: レポート第4章の図を簡略化 [11][15][17][18]。顔・指紋のデータはログイン先へ送信されません</div>
+  <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
+  <div class="foot-r"><b>07</b> / 10</div>
+</div>
+
+<!-- 8. 落とし穴: 同期先アカウント -->
+<div class="slide" data-dur="35000">
+  <div class="chip" data-anim="rise" data-delay="0">落とし穴</div>
+  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:28px;">でも、保存先のアカウントが破られたら？</div>
+  <div class="small" data-anim="rise" data-delay="320" style="margin-bottom:16px;">クラウド保存のパスキー悪用に、各社が注意喚起</div>
+  <div class="tags" style="margin-bottom:36px;">
+    <div class="tag" data-anim="pop" data-delay="600">SBI証券　10/2</div>
+    <div class="tag" data-anim="pop" data-delay="730">SMBC日興証券　10/6</div>
+  </div>
+  <div class="row">
+    <img class="ill ill-sm" data-anim="pop" data-delay="900" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgNDAwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwQTJBM0MiIHN0cm9rZS13aWR0aD0iNiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICA8Y2lyY2xlIGN4PSIyMDAiIGN5PSIyMDAiIHI9IjE3OCIgZmlsbD0iI0NERThFRiIgc3Ryb2tlPSJub25lIi8+CiAgPCEtLSBhY2NvdW50IHBlcnNvbiAtLT4KICA8Y2lyY2xlIGN4PSIyMDAiIGN5PSI1OCIgcj0iMjIiIGZpbGw9IiNGRkZGRkYiLz4KICA8cGF0aCBkPSJNMTU4IDExMiBhNDIgNDIgMCAwIDEgODQgMCBaIiBmaWxsPSIjRkZGRkZGIi8+CiAgPCEtLSB2YXVsdCAtLT4KICA8cmVjdCB4PSI4MiIgeT0iMTI0IiB3aWR0aD0iMjM2IiBoZWlnaHQ9IjIxNCIgcng9IjI2IiBmaWxsPSIjRkZGRkZGIi8+CiAgPHJlY3QgeD0iMTA2IiB5PSIxNDgiIHdpZHRoPSIxODgiIGhlaWdodD0iMTY2IiByeD0iMTYiIGZpbGw9IiMwMDdBOTkiLz4KICA8Y2lyY2xlIGN4PSIyMDAiIGN5PSIyMzEiIHI9IjQ4IiBmaWxsPSIjRkNFOUE4Ii8+CiAgPGNpcmNsZSBjeD0iMjAwIiBjeT0iMjMxIiByPSIxNCIgZmlsbD0iI0ZGRkZGRiIvPgogIDxwYXRoIGQ9Ik0yMDAgMTgzIFYxOTkgTTIwMCAyNjMgVjI3OSBNMTUyIDIzMSBIMTY4IE0yMzIgMjMxIEgyNDgiLz4KICA8cGF0aCBkPSJNMTA0IDMzOCBWMzU4IE0yOTYgMzM4IFYzNTgiLz4KICA8IS0tIGNyYWNrIC0tPgogIDxwYXRoIGQ9Ik0zMDAgMTI4IEwyODQgMTYwIEwzMDQgMTc2IEwyODggMjA2IiBzdHJva2U9IiNDODQ1MkQiIHN0cm9rZS13aWR0aD0iOCIvPgogIDwhLS0gc3BhcmUga2V5IG91dHNpZGUgLS0+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzMwIDMwMCkgcm90YXRlKC0zNSkiPgogICAgPGNpcmNsZSBjeD0iMCIgY3k9IjAiIHI9IjE4IiBmaWxsPSIjRkNFOUE4Ii8+CiAgICA8Y2lyY2xlIGN4PSIwIiBjeT0iMCIgcj0iNSIgZmlsbD0iI0NERThFRiIvPgogICAgPHBhdGggZD0iTTE4IDAgSDUyIE00NCAwIFYxMiIgc3Ryb2tlLXdpZHRoPSI3Ii8+CiAgPC9nPgo8L3N2Zz4K" alt="ひび割れた金庫と予備の鍵のイラスト">
+    <div class="col l">
+      <div class="hl hl-sm" data-anim="sweep" data-delay="1100" style="margin-bottom:36px;">守るべきは、Googleアカウント</div>
+      <div class="sub" data-anim="rise" data-delay="1750">主要メールと同期先を最優先に。<br>予備のログイン手段は<span class="pink">別の場所</span>に</div>
+    </div>
+  </div>
+  <div class="src">出典: SBI証券(2026-10-02)・SMBC日興証券(2026-10-06)の注意喚起／レポート第1・5章</div>
+  <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
+  <div class="foot-r"><b>08</b> / 10</div>
+</div>
+
+<!-- 9. Google 高度な保護機能 -->
+<div class="slide" data-dur="35000">
+  <div class="chip" data-anim="rise" data-delay="0">Google</div>
+  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:40px;">Googleの「高度な保護機能プログラム」</div>
+  <div class="row">
+    <img class="ill" data-anim="pop" data-delay="300" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgNDAwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwQTJBM0MiIHN0cm9rZS13aWR0aD0iNiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICA8Y2lyY2xlIGN4PSIyMDAiIGN5PSIyMDAiIHI9IjE3OCIgZmlsbD0iI0NERThFRiIgc3Ryb2tlPSJub25lIi8+CiAgPHBhdGggZD0iTTIwMCA0MCBMMzE2IDg0IFYxOTAgQzMxNiAyNjIgMjY2IDMxOCAyMDAgMzUyIEMxMzQgMzE4IDg0IDI2MiA4NCAxOTAgVjg0IFoiIGZpbGw9IiMwMDdBOTkiLz4KICA8cGF0aCBkPSJNMjAwIDY2IEwyOTIgMTAwIFYxOTAgQzI5MiAyNDggMjUyIDI5NiAyMDAgMzI0IEMxNDggMjk2IDEwOCAyNDggMTA4IDE5MCBWMTAwIFoiIGZpbGw9IiNGRkZGRkYiIHN0cm9rZT0ibm9uZSIvPgogIDwhLS0ga2V5IC0tPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDIwMCAxOTYpIHJvdGF0ZSgtNDApIj4KICAgIDxjaXJjbGUgY3g9Ii00NCIgY3k9IjAiIHI9IjMwIiBmaWxsPSIjRkNFOUE4Ii8+CiAgICA8Y2lyY2xlIGN4PSItNDQiIGN5PSIwIiByPSI5IiBmaWxsPSIjRkZGRkZGIi8+CiAgICA8cGF0aCBkPSJNLTE0IDAgSDYyIE0zOCAwIFYyMiBNNTYgMCBWMTYiIHN0cm9rZS13aWR0aD0iMTAiLz4KICA8L2c+CiAgPCEtLSBjaGVjayBiYWRnZSAtLT4KICA8Y2lyY2xlIGN4PSIyODgiIGN5PSIyOTYiIHI9IjM0IiBmaWxsPSIjQzg0NTJEIiBzdHJva2U9IiNGRkZGRkYiLz4KICA8cGF0aCBkPSJNMjcyIDI5NiBMMjg0IDMwOCBMMzA2IDI4NCIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2Utd2lkdGg9IjgiLz4KPC9zdmc+Cg==" alt="鍵と盾のイラスト">
+    <div class="col l">
+      <div class="hl hl-sm" data-anim="sweep" data-delay="380" style="margin-bottom:40px;">新端末は、鍵がないと入れない</div>
+      <div class="tags" style="justify-content:flex-start;margin-bottom:36px;">
+        <div class="tag" data-anim="pop" data-delay="950">新端末は鍵が必須</div>
+        <div class="tag" data-anim="pop" data-delay="1080">外部アプリを制限</div>
+        <div class="tag" data-anim="pop" data-delay="1210">復旧も厳格化</div>
+      </div>
+      <div class="sub" data-anim="rise" data-delay="1700">利用は<span class="pink">無料</span>。締め出しへの注意も必要です</div>
+    </div>
+  </div>
+  <div class="src">出典: レポート第6章 [22][23][24]（Google公式ヘルプ・FAQ）。条件は端末・地域・アカウント種別で異なります</div>
+  <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
+  <div class="foot-r"><b>09</b> / 10</div>
+</div>
+
+<!-- 10. 実演への中扉 -->
+<div class="slide gr s10" data-dur="15000">
+  <div class="chip" data-anim="rise" data-delay="0">実演</div>
+  <div class="row">
+    <img class="ill" data-anim="pop" data-delay="300" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgNDAwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwQTJBM0MiIHN0cm9rZS13aWR0aD0iNiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICA8Y2lyY2xlIGN4PSIyMDAiIGN5PSIyMDAiIHI9IjE3OCIgZmlsbD0iI0NERThFRiIgc3Ryb2tlPSJub25lIi8+CiAgPHJlY3QgeD0iNTYiIHk9Ijg2IiB3aWR0aD0iMjg4IiBoZWlnaHQ9IjE5NiIgcng9IjIwIiBmaWxsPSIjRkZGRkZGIi8+CiAgPHJlY3QgeD0iNzYiIHk9IjEwNiIgd2lkdGg9IjI0OCIgaGVpZ2h0PSIxNTYiIHJ4PSIxMCIgZmlsbD0iIzBBMkEzQyIvPgogIDxjaXJjbGUgY3g9IjIwMCIgY3k9IjE4NCIgcj0iNDIiIGZpbGw9IiNGQ0U5QTgiLz4KICA8cGF0aCBkPSJNMTkwIDE2NCBMMjI0IDE4NCBMMTkwIDIwNCBaIiBmaWxsPSIjMDA3QTk5Ii8+CiAgPHBhdGggZD0iTTIwMCAyODIgVjMyMiBNMTQ0IDMzMiBIMjU2Ii8+CiAgPCEtLSBwb2ludGVyIC0tPgogIDxwYXRoIGQ9Ik0yNzYgMjM4IEwyNzYgMzA0IEwyOTIgMjkwIEwzMDYgMzIyIEwzMjAgMzE2IEwzMDYgMjg0IEwzMjggMjgyIFoiIGZpbGw9IiNGRkZGRkYiLz4KPC9zdmc+Cg==" alt="画面とクリックのイラスト">
+    <div class="col l">
+      <div class="big grad" data-anim="pop" data-delay="360" data-len="750" style="margin-bottom:44px;">では、実際に<br>見てみましょう</div>
+      <div class="sub" data-anim="rise" data-delay="1100">登録の前に確認すること：<br><span class="pink">回復手段</span>の用意・締め出し・外部アプリの制限</div>
+    </div>
+  </div>
+  <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
+  <div class="foot-r"><b>10</b> / 10</div>
+</div>
+
+<!-- 付録1. 疑ったときの初動 -->
+<div class="slide" data-dur="20000">
+  <div class="chip" data-anim="rise" data-delay="0">付録 1</div>
+  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:40px;">疑ったときの最初の一手</div>
+  <div class="cards" style="margin-bottom:44px;">
+    <div class="card" data-anim="pop" data-delay="420">
+      <div class="label">① お金を止める</div>
+      <div class="value grad">連絡</div>
+      <div class="label desc">カード会社・金融機関へ<br>停止を相談</div>
+    </div>
+    <div class="card" data-anim="pop" data-delay="600">
+      <div class="label">② 入口を守る</div>
+      <div class="value grad">変更</div>
+      <div class="label desc">主要メールと同期先の<br>パスワードを変え、全端末ログアウト</div>
+    </div>
+    <div class="card" data-anim="pop" data-delay="780">
+      <div class="label">③ 侵入後の設定を消す</div>
+      <div class="value grad">取消</div>
+      <div class="label desc">知らない鍵・転送設定・<br>外部連携を取り消す</div>
+    </div>
+  </div>
+  <div class="sub" data-anim="rise" data-delay="1500">パスワード変更だけでは<span class="pink">入口が残る</span>ことがあります</div>
+  <div class="src">出典: レポート第9章 [01][04][29]。証拠（メール・履歴・日時）は残しつつ、被害を止める連絡を先に</div>
+  <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
+  <div class="foot-r"><b>A1</b> / A3</div>
+</div>
+
+<!-- 付録2. 実演の流れ -->
+<div class="slide" data-dur="20000">
+  <div class="chip" data-anim="rise" data-delay="0">付録 2</div>
+  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:24px;">実演の流れ（約3分）</div>
+  <div class="grid2" style="margin-bottom:28px;">
+    <div class="card" data-anim="pop" data-delay="400">
+      <div class="label">STEP 1</div>
+      <div class="value grad">設定を点検</div>
+      <div class="label desc">端末・鍵・復旧手段を確認する</div>
+    </div>
+    <div class="card" data-anim="pop" data-delay="560">
+      <div class="label">STEP 2</div>
+      <div class="value grad">鍵でログイン</div>
+      <div class="label desc">パスワードを入力せず、指紋やPINで</div>
+    </div>
+    <div class="card" data-anim="pop" data-delay="720">
+      <div class="label">STEP 3</div>
+      <div class="value grad">要件を読む</div>
+      <div class="label desc">高度な保護機能の条件と制約を見る</div>
+    </div>
+    <div class="card card-grad card-y" data-anim="pop" data-delay="880">
+      <div class="label">STEP 4</div>
+      <div class="value grad">手前で止める</div>
+      <div class="label desc">登録せず「今夜やる3つ」を伝える</div>
+    </div>
+  </div>
+  <div class="sub" data-anim="rise" data-delay="1500">使うのは<span class="pink">テスト用アカウント</span>か、画面のみ</div>
+  <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
+  <div class="foot-r"><b>A2</b> / A3</div>
+</div>
+
+<!-- 付録3. 出典と確認状況 -->
+<div class="slide" data-dur="40000">
+  <div class="chip" data-anim="rise" data-delay="0">付録 3</div>
+  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:28px;">出典と確認状況（2026-10-28 作成）</div>
+  <div class="refs" data-anim="rise" data-delay="400">
+    <p><b>レポート</b>「パスワード 二段階認証 パスキー 個人情報漏洩への備え」第1〜9章と出典[01]〜[33]（調査基準日 2026-10-29）</p>
+    <p><b>ソースネクスト</b> 22,519,960件（可能性）　ScanNetSecurity 2026-10-20／@IT 2026-10-17</p>
+    <p><b>警察庁統計</b> 2025年 約103.97億円・245万4,297件　報道（2026-03-12）</p>
+    <p><b>カード不正利用</b> 2025年 510.5億円／2026年4〜6月 107.7億円　日本クレジット協会・日本クレジットカード協会（報道）</p>
+    <p><b>証券各社の注意喚起</b> SBI証券 2026-10-02／SMBC日興証券 2026-10-06（検索で確認）</p>
+    <p class="warn"><b>未確認</b> 三菱UFJモルガン・スタンレー証券 10/16・IPA個人向け 10/26（レポート記載のみ）／Google公式ページの文言照合</p>
+  </div>
+  <div class="note" data-anim="rise" data-delay="900" style="margin-top:28px;">数値は公式発表で更新されることがあります。最新は各公式ページで確認してください</div>
+  <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
+  <div class="foot-r"><b>A3</b> / A3</div>
+</div>
+
+<div id="prog"></div>
+</div>
+</div>
+
+<div id="cover"><div class="btn">▶ 再生する</div></div>
+
+<script>
+(function () {
+  var FADE = 450;
+  var DEFAULT_LEN = { rise: 600, pop: 650, sweep: 520, stamp: 380, popback: 520, ghost: 900, fill: 1100, count: 1100 };
+
+  var stage = document.getElementById('stage');
+  var prog = document.getElementById('prog');
+  var cover = document.getElementById('cover');
+  var coverBtn = cover.querySelector('.btn');
+
+  var slides = Array.prototype.slice.call(stage.querySelectorAll('.slide'));
+  var meta = slides.map(function (s) {
+    var els = Array.prototype.slice.call(s.querySelectorAll('[data-anim]')).map(function (el) {
+      var fx = el.dataset.anim;
+      return {
+        el: el,
+        fx: fx,
+        delay: +(el.dataset.delay || 0),
+        len: +(el.dataset.len || DEFAULT_LEN[fx] || 600),
+        baseOp: parseFloat(getComputedStyle(el).opacity) || 1,
+        w: +(el.dataset.w || 0),
+        count: +(el.dataset.count || 0)
+      };
+    });
+    return { el: s, dur: +(s.dataset.dur || 6000), els: els };
+  });
+
+  var starts = [];
+  var acc = 0;
+  meta.forEach(function (m) { starts.push(acc); acc += m.dur - FADE; });
+  var total = starts[meta.length - 1] + meta[meta.length - 1].dur;
+
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function easeOutCubic(p) { return 1 - Math.pow(1 - p, 3); }
+  function easeOutBack(p) { var k = 1.70158, s = p - 1; return 1 + s * s * ((k + 1) * s + k); }
+
+  function applyFx(a, local, tAbs) {
+    var p = clamp((local - a.delay) / a.len, 0, 1);
+    var e = easeOutCubic(p);
+    var s = a.el.style;
+    switch (a.fx) {
+      case 'rise':
+        s.opacity = p;
+        s.transform = 'translateY(' + (1 - e) * 26 + 'px)';
+        break;
+      case 'pop':
+        s.opacity = p;
+        s.transform = 'translateY(' + (1 - e) * 18 + 'px) scale(' + (0.94 + 0.06 * e) + ')';
+        break;
+      case 'sweep':
+        s.opacity = p > 0 ? 1 : 0;
+        s.clipPath = p >= 1 ? 'none' : 'inset(-12% ' + (1 - e) * 100 + '% -12% -3%)';
+        break;
+      case 'stamp':
+        s.opacity = 0.9 * p;
+        s.transform = 'rotate(9deg) scale(' + (1 + (1 - e) * 0.9) + ')';
+        break;
+      case 'popback':
+        s.opacity = clamp(p * 2, 0, 1);
+        s.transform = 'rotate(12deg) scale(' + (p > 0 ? easeOutBack(p) : 0) + ')';
+        break;
+      case 'ghost':
+        s.opacity = a.baseOp * p;
+        s.transform = 'translateY(' + Math.sin(tAbs / 2600) * 7 + 'px)';
+        break;
+      case 'fill':
+        s.width = (a.w * e) + '%';
+        break;
+      case 'count':
+        s.opacity = clamp(p * 3, 0, 1);
+        a.el.textContent = (p >= 1 ? a.count : (a.count * e).toFixed(1)) + '%';
+        break;
+    }
+  }
+
+  function render(t) {
+    t = clamp(t, 0, total);
+    prog.style.width = (t / total * 100) + '%';
+    meta.forEach(function (m, i) {
+      var st = starts[i];
+      var en = st + m.dur;
+      var last = i === meta.length - 1;
+      var visible = t >= st && (last ? t <= en : t < en);
+      if (!visible) { m.el.style.display = 'none'; return; }
+      m.el.style.display = 'flex';
+      m.el.style.opacity = i === 0 ? 1 : clamp((t - st) / FADE, 0, 1);
+      var local = t - st - (i === 0 ? 150 : FADE * 0.7);
+      m.els.forEach(function (a) { applyFx(a, local, t); });
+    });
+  }
+
+  var playing = false;
+  var tCur = 0;
+  var wall = 0;
+
+  function tick(now) {
+    if (!playing) return;
+    tCur += now - wall;
+    wall = now;
+    if (tCur >= total) {
+      tCur = total;
+      render(tCur);
+      playing = false;
+      coverBtn.textContent = '↻ もう一度見る';
+      cover.style.display = 'flex';
+      return;
+    }
+    render(tCur);
+    requestAnimationFrame(tick);
+  }
+
+  function play() {
+    if (tCur >= total) tCur = 0;
+    playing = true;
+    requestAnimationFrame(function (now) { wall = now; requestAnimationFrame(tick); });
+  }
+
+  function fit() {
+    var sc = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    stage.style.transform = 'scale(' + sc + ')';
+  }
+  window.addEventListener('resize', fit);
+  fit();
+
+  cover.addEventListener('click', function () {
+    cover.style.display = 'none';
+    play();
+  });
+
+  document.addEventListener('keydown', function (ev) {
+    if (ev.code === 'Space') {
+      ev.preventDefault();
+      if (playing) { playing = false; } else { cover.style.display = 'none'; play(); }
+    }
+    if (ev.code === 'ArrowRight' || ev.code === 'ArrowLeft') {
+      var i = 0;
+      while (i < starts.length - 1 && starts[i + 1] <= tCur) i++;
+      i += ev.code === 'ArrowRight' ? 1 : -1;
+      i = clamp(i, 0, starts.length - 1);
+      tCur = starts[i];
+      render(tCur);
+    }
+    if (ev.code === 'KeyR') { tCur = 0; render(0); }
+  });
+
+  window.__seek = function (ms) { playing = false; tCur = clamp(ms, 0, total); render(tCur); };
+  window.__total = function () { return total; };
+
+  document.fonts.ready.then(function () {
+    render(0);
+    var q = new URLSearchParams(location.search);
+    if (q.has('t')) {
+      cover.style.display = 'none';
+      window.__seek(+q.get('t'));
+    } else if (q.has('autostart')) {
+      cover.style.display = 'none';
+      play();
+    }
+    window.__ready = true;
+  });
+})();
+</script>
+</body>
+</html>
