@@ -1,0 +1,8 @@
+{
+  "name": "security-deck-tools",
+  "private": true,
+  "description": "スライドの表示検査（qa2.js）と手動めくり検査（nav.js）用。npm install のあと、security-deck フォルダから node tools/qa2.js などで実行する。",
+  "devDependencies": {
+    "playwright": "1.63.0"
+  }
+}
