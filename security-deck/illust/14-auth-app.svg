@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none" stroke="#0A2A3C" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+  <circle cx="200" cy="200" r="178" fill="#CDE8EF" stroke="none"/>
+  <rect x="116" y="48" width="168" height="304" rx="28" fill="#FFFFFF"/>
+  <path d="M176 70 H224"/>
+  <!-- timer ring -->
+  <circle cx="200" cy="162" r="54" fill="#FFFFFF"/>
+  <path d="M200 108 a54 54 0 1 1 -50 74" stroke="#007A99" stroke-width="12"/>
+  <path d="M200 140 V166 L218 176"/>
+  <!-- code boxes -->
+  <g fill="#FCE9A8">
+    <rect x="138" y="244" width="24" height="34" rx="6"/><rect x="168" y="244" width="24" height="34" rx="6"/>
+    <rect x="198" y="244" width="24" height="34" rx="6"/><rect x="228" y="244" width="24" height="34" rx="6"/>
+  </g>
+  <rect x="140" y="304" width="120" height="14" rx="7" fill="#007A99"/>
+</svg>

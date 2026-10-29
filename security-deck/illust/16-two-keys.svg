@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none" stroke="#0A2A3C" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+  <circle cx="200" cy="200" r="178" fill="#CDE8EF" stroke="none"/>
+  <!-- house with key -->
+  <path d="M44 214 L116 150 L188 214 V310 H44 Z" fill="#FFFFFF"/>
+  <rect x="98" y="256" width="36" height="54" rx="4" fill="#007A99"/>
+  <g transform="translate(92 220) rotate(-35) scale(.5)">
+    <circle cx="0" cy="0" r="26" fill="#FCE9A8"/><circle cx="0" cy="0" r="8" fill="#CDE8EF"/>
+    <path d="M26 0 H78 M64 0 V18" stroke-width="10"/>
+  </g>
+  <!-- phone with key -->
+  <rect x="244" y="104" width="112" height="206" rx="20" fill="#FFFFFF"/>
+  <path d="M280 124 H320"/>
+  <circle cx="300" cy="196" r="24" fill="#FCE9A8"/><circle cx="300" cy="196" r="7" fill="#CDE8EF"/>
+  <path d="M300 220 V262 M300 244 H316 M300 258 H312" stroke-width="8"/>
+  <!-- separator -->
+  <path d="M216 120 V330" stroke="#C8452D" stroke-dasharray="3 14"/>
+</svg>

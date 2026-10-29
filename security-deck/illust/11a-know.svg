@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none" stroke="#0A2A3C" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+  <circle cx="200" cy="200" r="178" fill="#CDE8EF" stroke="none"/>
+  <!-- thought bubble with password field -->
+  <rect x="70" y="84" width="260" height="110" rx="26" fill="#FFFFFF"/>
+  <rect x="98" y="116" width="204" height="46" rx="12" fill="#FCE9A8"/>
+  <g fill="#0A2A3C" stroke="none">
+    <circle cx="130" cy="139" r="8"/><circle cx="162" cy="139" r="8"/><circle cx="194" cy="139" r="8"/>
+    <circle cx="226" cy="139" r="8"/><circle cx="258" cy="139" r="8"/>
+  </g>
+  <circle cx="150" cy="226" r="12" fill="#FFFFFF"/>
+  <circle cx="128" cy="256" r="8" fill="#FFFFFF"/>
+  <!-- head and shoulders -->
+  <circle cx="110" cy="300" r="30" fill="#FFFFFF"/>
+  <path d="M52 372 a58 58 0 0 1 116 0 Z" fill="#007A99"/>
+</svg>

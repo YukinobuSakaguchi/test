@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none" stroke="#0A2A3C" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+  <circle cx="200" cy="200" r="178" fill="#CDE8EF" stroke="none"/>
+  <rect x="116" y="48" width="168" height="304" rx="28" fill="#FFFFFF"/>
+  <path d="M176 70 H224"/>
+  <!-- message bubble -->
+  <path d="M142 124 H258 a14 14 0 0 1 14 14 V196 a14 14 0 0 1 -14 14 H186 L160 236 V210 H142 a14 14 0 0 1 -14 -14 V138 a14 14 0 0 1 14 -14 Z" fill="#FCE9A8"/>
+  <g fill="#0A2A3C" stroke="none">
+    <circle cx="150" cy="168" r="7"/><circle cx="172" cy="168" r="7"/><circle cx="194" cy="168" r="7"/>
+    <circle cx="216" cy="168" r="7"/><circle cx="238" cy="168" r="7"/>
+  </g>
+  <rect x="140" y="272" width="120" height="30" rx="10" fill="#007A99"/>
+</svg>

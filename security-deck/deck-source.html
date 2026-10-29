@@ -405,24 +405,89 @@ body[data-theme]:not([data-theme="signature"]) .meter { background:var(--t-pl); 
 </style>
 <style id="deck">
 /* ===== deck additions（エンジンのCSS/JSは未改変。この資料用の追加レイアウトのみ） ===== */
-.row{display:flex;align-items:center;justify-content:center;gap:64px}
+.chip{margin-bottom:24px}
+.kicker{margin-bottom:30px}
+.row{display:flex;align-items:center;justify-content:center;gap:56px}
 .col{display:flex;flex-direction:column;align-items:center}
 .col.l{align-items:flex-start;text-align:left}
-.ill{flex:none;width:400px;height:400px;display:block}
-.ill-sm{width:340px;height:340px}
-.ill-xs{width:200px;height:200px;margin:0 auto 6px}
-.src{position:absolute;left:128px;right:84px;bottom:100px;text-align:left;font-size:24px;font-weight:500;letter-spacing:.03em;color:var(--t-muted);z-index:2}
-.flow{display:flex;flex-direction:column;gap:30px;font-size:36px;font-weight:700;color:var(--t-ink);line-height:1.4}
-.flow .f1{text-align:left}
-.flow .f2{text-align:right}
-.card .desc{font-size:30px;margin-top:14px;margin-bottom:0;line-height:1.5}
-.grid2{display:grid;grid-template-columns:repeat(2,700px);gap:24px 40px}
-.grid2 .card{padding:22px 36px 26px}
-.grid2 .card .value{font-size:76px}
-.refs{text-align:left;font-size:27px;font-weight:500;line-height:1.55;max-width:1640px}
-.refs p{margin-bottom:12px}
+.ill{flex:none;width:340px;height:340px;display:block}
+.ill-sm{width:290px;height:290px}
+.ill-xs{width:130px;height:130px;margin:0 auto 4px;display:block}
+.src{position:absolute;left:128px;right:84px;bottom:100px;text-align:left;font-size:28px;font-weight:500;letter-spacing:.02em;color:var(--t-muted);z-index:2;white-space:nowrap}
+
+/* 説明文・ことば・手順 */
+.blk{width:1600px;display:flex;flex-direction:column;gap:10px;text-align:left}
+.exp{font-size:38px;font-weight:700;line-height:1.55;letter-spacing:.02em;text-align:left;color:var(--t-ink)}
+.exp b{color:var(--t-main);font-weight:900}
+.exp .hi{background:var(--t-marker);padding:0 .15em;border-radius:4px}
+.term{display:flex;align-items:flex-start;gap:20px;background:var(--t-pl);border-radius:var(--t-radius);padding:14px 28px 16px;font-size:36px;font-weight:700;line-height:1.5;text-align:left;color:var(--t-ink);width:1600px}
+.term .tl{flex:none;margin-top:6px;background:var(--t-main);color:#fff;font-size:28px;font-weight:900;letter-spacing:.08em;padding:2px 20px 4px;border-radius:999px;white-space:nowrap}
+.term b{color:var(--t-main);font-weight:900}
+.steps{display:flex;flex-direction:column;gap:14px;text-align:left}
+.steps .st{display:flex;align-items:center;gap:22px;font-size:38px;font-weight:700;line-height:1.45}
+.steps .n{flex:none;width:56px;height:56px;border-radius:50%;background:var(--t-main);color:#fff;font-size:32px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.steps b{color:var(--t-main);font-weight:900}
+.tags2{display:flex;gap:20px}
+
+/* 数字カード（小） */
+.stats{display:flex;gap:26px;justify-content:center}
+.stat{background:#fff;border:2px solid var(--t-main);border-radius:var(--t-radius);padding:8px 30px 12px;text-align:center}
+.stat .l{font-size:30px;font-weight:700;color:var(--t-muted)}
+.stat .v{font-size:60px;font-weight:900;color:var(--t-main);line-height:1.2;white-space:nowrap}
+
+/* 2列カード・3列カード */
+.cols2{display:flex;gap:32px;align-items:stretch;justify-content:center;width:1680px}
+.pc{flex:1;background:#fff;border:2px solid var(--t-rule);border-radius:var(--t-radius);padding:18px 30px 22px;text-align:left}
+.pc.hi{border:3px solid var(--t-main)}
+.pc h3{font-size:40px;font-weight:900;color:var(--t-main);margin-bottom:10px;letter-spacing:.04em}
+.pc ul{list-style:none}
+.pc li{font-size:36px;font-weight:700;line-height:1.45;margin-bottom:8px;padding-left:1.3em;text-indent:-1.3em}
+.pc li::before{content:'○ ';color:var(--t-main)}
+.pc li.x::before{content:'△ ';color:var(--t-accent)}
+.pc li.n::before{content:'';}
+.pc li.n{padding-left:0;text-indent:0}
+.fl{display:flex;flex-direction:column;gap:6px}
+.fl .bx{background:var(--t-pl);border-radius:var(--t-radius);padding:8px 20px 10px;font-size:36px;font-weight:700;line-height:1.4}
+.fl .ar{font-size:30px;color:var(--t-main);text-align:center;line-height:1}
+.tri{display:flex;gap:28px;width:1680px;justify-content:center;align-items:stretch}
+.tc{flex:1;background:#fff;border:2px solid var(--t-rule);border-radius:var(--t-radius);padding:14px 24px 18px;text-align:center}
+.tc.hi{border:3px solid var(--t-main)}
+.tc h3{font-size:40px;font-weight:900;color:var(--t-main);margin-bottom:4px}
+.tc .lb{font-size:30px;font-weight:900;color:var(--t-accent);margin-top:6px;text-align:left}
+.tc p{font-size:36px;font-weight:700;line-height:1.4;text-align:left}
+.tc .ex{font-size:36px;font-weight:700;color:var(--t-muted);line-height:1.35}
+
+/* 比較表 */
+.cmp{border-collapse:separate;border-spacing:0;width:1680px;font-size:34px;text-align:left}
+.cmp th{background:var(--t-dp);color:#fff;font-size:30px;font-weight:900;padding:10px 18px;letter-spacing:.06em}
+.cmp td{padding:10px 18px;border-bottom:2px solid var(--t-rule);background:#fff;font-weight:700;line-height:1.35}
+.cmp td:first-child{font-weight:900;color:var(--t-main)}
+.cmp tr.hi td{background:var(--t-pl)}
+
+/* 用語集 */
+.gl{display:grid;grid-template-columns:repeat(2,820px);gap:14px 30px;text-align:left}
+.gl .g{background:#fff;border:2px solid var(--t-rule);border-radius:var(--t-radius);padding:10px 24px 14px}
+.gl dt{font-size:38px;font-weight:900;color:var(--t-main)}
+.gl dd{font-size:34px;font-weight:700;line-height:1.4}
+
+/* 手順カード（付録） */
+.grid2{display:grid;grid-template-columns:repeat(2,780px);gap:24px 40px}
+.grid2 .card{padding:20px 36px 24px}
+.grid2 .card .value{font-size:70px}
+.card .desc{font-size:34px;margin-top:10px;margin-bottom:0;line-height:1.45}
+.refs{text-align:left;font-size:30px;font-weight:500;line-height:1.5;width:1640px}
+.refs p{margin-bottom:10px}
 .refs b{font-weight:900;color:var(--t-main);margin-right:.5em}
 .refs .warn b{color:var(--t-accent)}
+
+/* 提案タグ・操作ヒント */
+.tag-s{display:inline-block;background:var(--t-marker);color:var(--t-ink);font-size:28px;font-weight:900;padding:2px 18px 4px;border-radius:999px;margin-left:14px;vertical-align:middle;letter-spacing:.06em}
+#hint{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:60;background:rgba(10,35,64,.86);color:#fff;font:700 18px/1.4 "Yu Gothic","Hiragino Sans",Meiryo,sans-serif;letter-spacing:.06em;padding:8px 22px;border-radius:999px;opacity:0;transition:opacity .4s;pointer-events:none;white-space:nowrap}
+#hint.on{opacity:1}
+
+.cards.three{gap:36px;align-items:stretch}
+.cards.three .card{width:540px;padding:20px 30px 26px;text-align:center}
+.cards.three .card .value{font-size:80px}
 </style>
 </head>
 <body data-theme="C">
@@ -431,237 +496,455 @@ body[data-theme]:not([data-theme="signature"]) .meter { background:var(--t-pl); 
 <div id="stage">
 
 <!-- 1. 表紙 -->
-<div class="slide s1" data-dur="12000">
-  <div class="eyebrow" data-anim="rise" data-delay="0" style="margin-bottom:36px;">PASSWORD &amp; CARD LEAK ─ 2026.10</div>
+<div class="slide s1" data-dur="60000">
+  <div class="eyebrow" data-anim="rise" data-delay="0" style="margin-bottom:36px;">PASSWORD &amp; CARD SECURITY ─ 2026.10</div>
   <div class="row">
     <div class="col l">
       <div class="title grad" data-anim="pop" data-delay="200" data-len="750" style="font-size:132px;margin-bottom:40px;">そのパスワード、<br>漏れているかも</div>
-      <div class="sub" data-anim="rise" data-delay="500" style="font-size:48px;margin-bottom:52px;">ニュースから考える、個人の守り方</div>
-      <div class="pill" data-anim="rise" data-delay="700">8分でわかる</div>
+      <div class="sub" data-anim="rise" data-delay="500" style="font-size:48px;margin-bottom:52px;">ニュースから学ぶ、個人の守り方</div>
+      <div class="pill" data-anim="rise" data-delay="700">初心者向け・約8分</div>
     </div>
-    <img class="ill" data-anim="pop" data-delay="400" src="illust/01-broken-key.svg" alt="割れた鍵のイラスト">
+    <img class="ill" style="width:400px;height:400px" data-anim="pop" data-delay="400" src="illust/01-broken-key.svg" alt="割れた鍵のイラスト">
   </div>
   <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
-  <div class="foot-r"><b>01</b> / 10</div>
+  <div class="foot-r"><b>01</b> / 19</div>
 </div>
 
-<!-- 2. ニュース: 2,252万件 -->
-<div class="slide num" data-dur="30000">
+<!-- 2. ニュース -->
+<div class="slide num" data-dur="60000">
   <div class="chip" data-anim="rise" data-delay="0">ニュース</div>
-  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:20px;">パスワードを含む会員情報が流出の可能性</div>
-  <div class="row">
-    <img class="ill" data-anim="pop" data-delay="300" src="illust/02-leak.svg" alt="データベースから情報が漏れるイラスト">
+  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:18px;">パスワードを含む会員情報が流出の可能性</div>
+  <div class="row" style="margin-bottom:18px;">
+    <img class="ill ill-sm" data-anim="pop" data-delay="300" src="illust/02-leak.svg" alt="データベースから情報が漏れるイラスト">
     <div class="col">
-      <div class="label" data-anim="rise" data-delay="320">ソースネクスト　2026年10月15日公表</div>
-      <div class="big grad" data-anim="pop" data-delay="550" data-len="800" style="margin-bottom:24px;">2,252万件</div>
-      <div class="tags" style="margin-bottom:0;">
-        <div class="tag" data-anim="pop" data-delay="1000">メールアドレス</div>
-        <div class="tag" data-anim="pop" data-delay="1130">パスワード</div>
-        <div class="tag" data-anim="pop" data-delay="1260">氏名・住所</div>
-      </div>
+      <div class="label" data-anim="rise" data-delay="320" style="font-size:38px;">ソースネクスト　2026年10月15日公表</div>
+      <div class="big grad" data-anim="pop" data-delay="550" data-len="800" style="font-size:150px;margin-bottom:0;">2,252万件</div>
     </div>
   </div>
-  <div class="sub" data-anim="rise" data-delay="1750" style="margin-top:16px;">カード情報は<span class="pink">対象外</span>と発表。<br>何が漏れたかで、取る対策が変わります</div>
-  <div class="src">出典: 同社発表を報じたScanNetSecurity(2026-10-20)ほか。件数は「流出した可能性」で、対象項目は登録状況により異なる</div>
+  <div class="blk" data-anim="rise" data-delay="1000">
+    <div class="exp"><b>漏れた可能性がある情報：</b>メールアドレス、パスワード、氏名、住所など（人によって項目は異なります）。<b>カード情報</b>は対象外と発表されています。</div>
+  </div>
+  <div class="term" data-anim="rise" data-delay="1400" style="margin-top:12px;"><span class="tl">ことば</span><span>「流出」＝情報が外に漏れること。「可能性」＝漏れたかもしれない件数、という意味です。</span></div>
+  <div class="src">出典: ScanNetSecurity(2026-10-20)ほか報道。件数は「可能性」</div>
   <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
-  <div class="foot-r"><b>02</b> / 10</div>
+  <div class="foot-r"><b>02</b> / 19</div>
 </div>
 
-<!-- 3. 実態: フィッシング -->
-<div class="slide" data-dur="30000">
-  <div class="chip" data-anim="rise" data-delay="0">実態</div>
-  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:36px;">盗まれるのは、サイトからだけではない</div>
-  <div class="row" style="margin-bottom:40px;">
+<!-- 3. 使い回し -->
+<div class="slide" data-dur="60000">
+  <div class="chip" data-anim="rise" data-delay="0">なぜ危ない？</div>
+  <div class="kicker" data-anim="rise" data-delay="140">漏れたパスワードは、他のサイトで試される</div>
+  <div class="row" style="margin-bottom:24px;">
+    <img class="ill ill-sm" data-anim="pop" data-delay="300" src="illust/05-one-key.svg" alt="1本の鍵で複数の南京錠が開くイラスト">
+    <div class="steps">
+      <div class="st" data-anim="rise" data-delay="500"><span class="n">1</span><span>悪者が、漏れた「メールアドレス＋パスワード」を手に入れる</span></div>
+      <div class="st" data-anim="rise" data-delay="900"><span class="n">2</span><span>別の通販・SNS・決済サービスで、同じ組み合わせを次々に試す</span></div>
+      <div class="st" data-anim="rise" data-delay="1300"><span class="n">3</span><span><b>同じパスワードを使っていると、ログインされてしまう</b></span></div>
+    </div>
+  </div>
+  <div class="term" data-anim="rise" data-delay="1700"><span class="tl">ことば</span><span>「使い回し」＝複数のサービスで同じパスワードを使うこと。この手口を<span style="white-space:nowrap">「パスワードリスト攻撃」</span>と呼びます。</span></div>
+  <div class="src">出典: レポート第2章</div>
+  <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
+  <div class="foot-r"><b>03</b> / 19</div>
+</div>
+
+<!-- 4. フィッシング -->
+<div class="slide" data-dur="60000">
+  <div class="chip" data-anim="rise" data-delay="0">手口</div>
+  <div class="kicker" data-anim="rise" data-delay="140">「フィッシング」＝偽サイトでだまし取る詐欺</div>
+  <div class="row" style="margin-bottom:26px;">
     <img class="ill ill-sm" data-anim="pop" data-delay="300" src="illust/03-phishing-hook.svg" alt="偽のログイン画面に釣り針が垂れるイラスト">
-    <div class="cards" style="margin-bottom:0;">
-      <div class="card card-y" data-anim="pop" data-delay="520">
-        <div class="label">ネット不正送金（2025年）</div>
-        <div class="value grad">約104億円</div>
-      </div>
-      <div class="card card-y" data-anim="pop" data-delay="700">
-        <div class="label">フィッシング報告（2025年）</div>
-        <div class="value grad">245万件</div>
-      </div>
+    <div class="steps">
+      <div class="st" data-anim="rise" data-delay="500"><span class="n">1</span><span>「本人確認が必要です」などの偽メール・SMSが届く</span></div>
+      <div class="st" data-anim="rise" data-delay="900"><span class="n">2</span><span>リンクを開くと、本物そっくりの偽サイトが出る</span></div>
+      <div class="st" data-anim="rise" data-delay="1300"><span class="n">3</span><span><b>ID・パスワード・カード番号・認証コードを自分で入力して渡してしまう</b></span></div>
     </div>
   </div>
-  <div class="sub" data-anim="rise" data-delay="1500">手口の約9割はフィッシング。<br>偽サイトに<span class="pink">自分で入力</span>して、渡してしまいます</div>
-  <div class="src">出典: 警察庁の2025年統計（2026-03報道）。不正送金は約103.97億円、フィッシング報告は245万4,297件</div>
+  <div class="stats" data-anim="rise" data-delay="1700">
+    <div class="stat"><div class="l">ネット不正送金（2025年）</div><div class="v">約104億円</div></div>
+    <div class="stat"><div class="l">フィッシング報告（2025年）</div><div class="v">245万件</div></div>
+    <div class="stat"><div class="l">不正送金の手口の約9割は</div><div class="v">フィッシング</div></div>
+  </div>
+  <div class="src">出典: 警察庁2025年統計の報道(2026-03)。不正送金は約103.97億円</div>
   <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
-  <div class="foot-r"><b>03</b> / 10</div>
+  <div class="foot-r"><b>04</b> / 19</div>
 </div>
 
-<!-- 4. カード不正利用 -->
-<div class="slide num" data-dur="30000">
+<!-- 5. カード -->
+<div class="slide num" data-dur="60000">
   <div class="chip" data-anim="rise" data-delay="0">カード</div>
-  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:20px;">カードの不正利用は、年510億円超</div>
-  <div class="row" style="margin-bottom:20px;">
-    <img class="ill" data-anim="pop" data-delay="300" src="illust/04-card-warning.svg" alt="警告マーク付きのクレジットカードのイラスト">
+  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:18px;">カードも、偽サイトで番号を盗まれる</div>
+  <div class="row" style="margin-bottom:18px;">
+    <img class="ill ill-sm" data-anim="pop" data-delay="300" src="illust/04-card-warning.svg" alt="警告マーク付きのクレジットカードのイラスト">
     <div class="col">
-      <div class="label" data-anim="rise" data-delay="320">不正利用のうち、フィッシングが原因と推計される割合</div>
-      <div class="big grad" data-anim="count" data-count="75" data-delay="550" data-len="1200">75%</div>
-      <div class="meter" data-anim="rise" data-delay="400" style="margin-bottom:0;"><div class="fill" data-anim="fill" data-w="75" data-delay="650" data-len="1200"></div></div>
+      <div class="label" data-anim="rise" data-delay="320" style="font-size:36px;">不正利用のうち、フィッシングが原因と推計される割合</div>
+      <div class="big grad" data-anim="count" data-count="75" data-delay="550" data-len="1200" style="font-size:150px;margin-bottom:6px;">75%</div>
+      <div class="meter" data-anim="rise" data-delay="400" style="width:760px;margin-bottom:0;"><div class="fill" data-anim="fill" data-w="75" data-delay="650" data-len="1200"></div></div>
     </div>
   </div>
-  <div class="sub" data-anim="rise" data-delay="1850">2025年の被害は510.5億円。2026年4〜6月は107.7億円で、<br>うち<span class="pink">番号盗用が100.1億円</span></div>
-  <div class="src">出典: 日本クレジット協会・日本クレジットカード協会（別団体の数値を併記、報道ベース）。75%はフィッシング起因の推計</div>
+  <div class="blk" data-anim="rise" data-delay="1700">
+    <div class="exp">2025年のカード不正利用は<b>510.5億円</b>。2026年4〜6月の107.7億円のうち<b>100.1億円</b>は「番号盗用」（盗まれたカード番号をネットで使われる被害）です。</div>
+  </div>
+  <div class="term" data-anim="rise" data-delay="2000" style="margin-top:10px;"><span class="tl">ことば</span><span>「推計」＝正確に数えた数ではなく、見積もった数字のことです。</span></div>
+  <div class="src">出典: 日本クレジット協会・日本クレジットカード協会（報道）</div>
   <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
-  <div class="foot-r"><b>04</b> / 10</div>
+  <div class="foot-r"><b>05</b> / 19</div>
 </div>
 
-<!-- 5. 中扉: 強いパスワード -->
-<div class="slide" data-dur="35000">
-  <div class="chip" data-anim="rise" data-delay="0">対策 1</div>
-  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:40px;">強いパスワードにすれば安心？</div>
-  <div class="row">
-    <img class="ill" data-anim="pop" data-delay="300" src="illust/05-one-key.svg" alt="1本の鍵で複数の南京錠が開くイラスト">
-    <div class="col l">
-      <div class="hl hl-sm" data-anim="sweep" data-delay="380" style="margin-bottom:44px;">答えは、使い回しをやめること</div>
-      <div class="sub" data-anim="rise" data-delay="1050" style="margin-bottom:28px;">サービスごとに別の<span class="pink">16文字以上</span>を<br>管理ツールに作らせ、覚えようとしない</div>
-      <div class="note" data-anim="rise" data-delay="1500">※16文字は実務上の目安。上限内で長くし、二段階認証と併用</div>
+<!-- 6. 本人確認の3種類 -->
+<div class="slide" data-dur="60000">
+  <div class="chip" data-anim="rise" data-delay="0">基本</div>
+  <div class="kicker" data-anim="rise" data-delay="140">ログインは「本人確認」。材料は3種類</div>
+  <div class="tri" style="margin-bottom:20px;">
+    <div class="tc" data-anim="pop" data-delay="400"><img class="ill-xs" src="illust/11a-know.svg" alt="頭の中で覚えている文字列のイラスト"><h3>知っているもの</h3><div class="ex">パスワード・暗証番号（PIN）</div></div>
+    <div class="tc" data-anim="pop" data-delay="600"><img class="ill-xs" src="illust/11b-have.svg" alt="スマートフォンと鍵のイラスト"><h3>持っているもの</h3><div class="ex">スマホ・セキュリティキー</div></div>
+    <div class="tc" data-anim="pop" data-delay="800"><img class="ill-xs" src="illust/11c-body.svg" alt="指紋のイラスト"><h3>身体の特徴</h3><div class="ex">指紋・顔</div></div>
+  </div>
+  <div class="blk" data-anim="rise" data-delay="1300">
+    <div class="exp"><b>種類の違うものを2つ以上</b>組み合わせるほど、突破されにくくなります。次から、3つの方式を順に見ていきます。</div>
+  </div>
+  <div class="term" data-anim="rise" data-delay="1700" style="margin-top:10px;"><span class="tl">ことば</span><span><b>二段階認証</b>＝確認が2回あること。<b>二要素認証</b>＝種類の違う2つで確認すること。パスワードのあとに暗証番号を足しても、どちらも「知っているもの」なので二要素にはなりません。</span></div>
+  <div class="src">出典: レポート第3章（NIST SP 800-63B-4）</div>
+  <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
+  <div class="foot-r"><b>06</b> / 19</div>
+</div>
+
+<!-- 7. パスワード -->
+<div class="slide" data-dur="60000">
+  <div class="chip" data-anim="rise" data-delay="0">方式 1　パスワード</div>
+  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:22px;">パスワード：知っている文字列で確認する</div>
+  <div class="cols2" style="margin-bottom:16px;">
+    <div class="pc" data-anim="pop" data-delay="400">
+      <h3>仕組み</h3>
+      <div class="fl">
+        <div class="bx">1　あなたが文字列を入力する</div><div class="ar">▼</div>
+        <div class="bx">2　サービスが、計算で「変換した値（ハッシュ値）」を作る</div><div class="ar">▼</div>
+        <div class="bx">3　保存済みの値と同じなら、本人とみなす</div>
+      </div>
+    </div>
+    <div class="pc" data-anim="pop" data-delay="650">
+      <h3>特徴と弱点</h3>
+      <ul>
+        <li>手軽で、ほとんどのサービスで使える</li>
+        <li class="x">使い回すと、1か所の漏洩が全体に広がる</li>
+        <li class="x">短い・よくある文字列は、推測されやすい</li>
+        <li class="x">漏れた「変換した値」も、候補を大量に試して当てられることがある</li>
+        <li class="x">偽サイトに入力すると、そのまま渡してしまう</li>
+      </ul>
     </div>
   </div>
-  <div class="src">出典: レポート第2・8章（NIST SP 800-63B-4、Googleパスワードマネージャー）</div>
+  <div class="term" data-anim="rise" data-delay="1200"><span class="tl">守り方</span><span>サービスごとに別の<b>16文字以上</b>（目安）を、<b>管理アプリ</b>に作らせる。管理アプリ＝パスワードを作って覚えてくれるアプリ（例：Googleパスワードマネージャー）。</span></div>
+  <div class="src">出典: レポート第2・8章。16文字は本レポートの目安で、安全の保証ではありません</div>
   <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
-  <div class="foot-r"><b>05</b> / 10</div>
+  <div class="foot-r"><b>07</b> / 19</div>
 </div>
 
-<!-- 6. 中扉: 二段階認証 -->
-<div class="slide" data-dur="35000">
-  <div class="chip" data-anim="rise" data-delay="0">対策 2</div>
-  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:36px;">二段階認証なら、もう大丈夫？</div>
-  <div class="row" style="margin-bottom:40px;">
+<!-- 8. 二段階認証の仕組み -->
+<div class="slide" data-dur="60000">
+  <div class="chip" data-anim="rise" data-delay="0">方式 2　二段階認証</div>
+  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:16px;">二段階認証：パスワード＋もう1回の確認</div>
+  <div class="blk" data-anim="rise" data-delay="320" style="margin-bottom:14px;">
+    <div class="exp">パスワードのあと、<b>もう1つ別の方法で確認</b>。使わないより安全性が上がります。</div>
+  </div>
+  <div class="tri">
+    <div class="tc" data-anim="pop" data-delay="600"><img class="ill-xs" src="illust/13-sms.svg" alt="SMSで届く数字コードのイラスト"><h3>SMSコード</h3>
+      <div class="lb">仕組み</div><p>電話番号に届く数字を入力する</p>
+      <div class="lb">注意</div><p>電話番号の乗っ取りに注意</p></div>
+    <div class="tc" data-anim="pop" data-delay="800"><img class="ill-xs" src="illust/14-auth-app.svg" alt="認証アプリのイラスト"><h3>認証アプリ</h3>
+      <div class="lb">仕組み</div><p>30秒ごとに数字が入れ替わる</p>
+      <div class="lb">注意</div><p>最初のQRコードは流出に注意</p></div>
+    <div class="tc" data-anim="pop" data-delay="1000"><img class="ill-xs" src="illust/15-approve.svg" alt="承認ボタンのイラスト"><h3>承認通知</h3>
+      <div class="lb">仕組み</div><p>スマホの通知で「承認」を押す</p>
+      <div class="lb">注意</div><p>身に覚えのない承認はしない</p></div>
+  </div>
+  <div class="src">出典: レポート第3章（NIST SP 800-63B-4、RFC 6238）</div>
+  <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
+  <div class="foot-r"><b>08</b> / 19</div>
+</div>
+
+<!-- 9. 二段階認証の弱点 -->
+<div class="slide" data-dur="60000">
+  <div class="chip" data-anim="rise" data-delay="0">方式 2　弱点</div>
+  <div class="kicker" data-anim="rise" data-delay="140">コードも、偽サイトに渡すと突破される</div>
+  <div class="row" style="margin-bottom:22px;">
     <img class="ill ill-sm" data-anim="pop" data-delay="300" src="illust/06-code-relay.svg" alt="偽サイトを経由して認証コードが中継されるイラスト">
-    <div class="cards" style="margin-bottom:0;">
-      <div class="card" data-anim="pop" data-delay="520">
-        <div class="label">SMS・認証アプリのコード</div>
-        <div class="value" style="color:var(--t-muted);">中継される</div>
-      </div>
-      <div class="card card-grad card-y" data-anim="pop" data-delay="800" data-len="650">
-        <div class="label"><span class="pink">パスキー（偽サイトでは）</span></div>
-        <div class="value grad">守られる</div>
-      </div>
+    <div class="steps">
+      <div class="st" data-anim="rise" data-delay="500"><span class="n">1</span><span>偽サイトに、IDとパスワードを入力する</span></div>
+      <div class="st" data-anim="rise" data-delay="850"><span class="n">2</span><span>本物のサイトが、あなたのスマホにコードを送る</span></div>
+      <div class="st" data-anim="rise" data-delay="1200"><span class="n">3</span><span>あなたが、そのコードも偽サイトに入力する</span></div>
+      <div class="st" data-anim="rise" data-delay="1550"><span class="n">4</span><span><b>犯人がコードをすぐ本物に転送し、ログインされる</b></span></div>
     </div>
   </div>
-  <div class="sub" data-anim="rise" data-delay="1600">コードは偽サイトで<span class="pink">転送され得ます</span>。<br>パスキーは接続先のドメインを検証します</div>
-  <div class="src">出典: レポート第3・4章（NIST SP 800-63B-4、W3C WebAuthn、日本証券業協会）</div>
+  <div class="term" data-anim="rise" data-delay="1900"><span class="tl">ことば</span><span>「リアルタイムフィッシング」＝入力した内容を、その場で本物のサイトへ中継する手口。コードが約30秒で変わっても防げません。</span></div>
+  <div class="src">出典: レポート第3章、日本証券業協会の注意喚起</div>
   <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
-  <div class="foot-r"><b>06</b> / 10</div>
+  <div class="foot-r"><b>09</b> / 19</div>
 </div>
 
-<!-- 7. パスキーの仕組み -->
-<div class="slide" data-dur="35000">
-  <div class="chip" data-anim="rise" data-delay="0">仕組み</div>
-  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:40px;">パスキーは、パスワードを入力しない</div>
-  <div class="cards" style="margin-bottom:44px;">
-    <div class="card" data-anim="pop" data-delay="420" style="padding:30px 56px 38px;">
-      <img class="ill ill-xs" src="illust/07a-phone-key.svg" alt="秘密鍵を持つスマートフォンのイラスト">
-      <div class="label">自分の端末</div>
-      <div class="value" style="font-size:80px;">秘密鍵</div>
+<!-- 10. パスキーの仕組み -->
+<div class="slide" data-dur="60000">
+  <div class="chip" data-anim="rise" data-delay="0">方式 3　パスキー</div>
+  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:22px;">パスキー：鍵のペアで本人確認する</div>
+  <div class="row" style="margin-bottom:18px;gap:44px;">
+    <div class="row" style="gap:16px;" data-anim="pop" data-delay="300">
+      <div class="col"><img class="ill-xs" style="width:190px;height:190px" src="illust/07a-phone-key.svg" alt="秘密鍵を持つスマートフォンのイラスト"><div class="exp" style="font-size:32px;text-align:center;">あなたの端末<br><b>秘密鍵</b></div></div>
+      <div class="col"><img class="ill-xs" style="width:190px;height:190px" src="illust/07b-service-lock.svg" alt="公開鍵を登録した本物のサービスのイラスト"><div class="exp" style="font-size:32px;text-align:center;">本物のサービス<br><b>公開鍵</b></div></div>
     </div>
-    <div class="flow" data-anim="rise" data-delay="800">
-      <div class="f1">← 今回だけの確認データ</div>
-      <div class="f2">秘密鍵で署名した結果 →</div>
-    </div>
-    <div class="card card-grad card-y" data-anim="pop" data-delay="620" data-len="650" style="padding:30px 56px 38px;">
-      <img class="ill ill-xs" src="illust/07b-service-lock.svg" alt="公開鍵を登録した本物のサービスのイラスト">
-      <div class="label">本物のサービス</div>
-      <div class="value grad" style="font-size:80px;">公開鍵</div>
+    <div class="steps">
+      <div class="st" data-anim="rise" data-delay="500"><span class="n">1</span><span>本物のサービスが、今回だけの確認データを送る</span></div>
+      <div class="st" data-anim="rise" data-delay="800"><span class="n">2</span><span>端末が、そのサービス用のパスキーを選ぶ</span></div>
+      <div class="st" data-anim="rise" data-delay="1100"><span class="n">3</span><span>指紋・顔・PINで「使っていい」と許可する</span></div>
+      <div class="st" data-anim="rise" data-delay="1400"><span class="n">4</span><span>秘密鍵で確認データに署名して返す</span></div>
+      <div class="st" data-anim="rise" data-delay="1700"><span class="n">5</span><span>サービスが公開鍵で確かめて、ログイン</span></div>
     </div>
   </div>
-  <div class="sub" data-anim="rise" data-delay="1500">鍵そのものは送りません。指紋・顔・PINは<span class="pink">使用の許可</span>だけ</div>
-  <div class="src">出典: レポート第4章の図を簡略化 [11][15][17][18]。顔・指紋のデータはログイン先へ送信されません</div>
+  <div class="term" data-anim="rise" data-delay="2000"><span class="tl">ことば</span><span><b>秘密鍵</b>＝端末の中に隠しておく鍵（外に出さない）。<b>公開鍵</b>＝サービスに預ける、確認専用の鍵。パスワードも秘密鍵も、ネットには流れません。</span></div>
+  <div class="src">出典: レポート第4章 [11][15][17][18]</div>
   <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
-  <div class="foot-r"><b>07</b> / 10</div>
+  <div class="foot-r"><b>10</b> / 19</div>
 </div>
 
-<!-- 8. 落とし穴: 同期先アカウント -->
-<div class="slide" data-dur="35000">
+<!-- 11. パスキーの特徴 -->
+<div class="slide" data-dur="60000">
+  <div class="chip" data-anim="rise" data-delay="0">方式 3　特徴</div>
+  <div class="kicker" data-anim="rise" data-delay="140">パスキーは、なぜ偽サイトに強い？</div>
+  <div class="blk" data-anim="rise" data-delay="320" style="margin-bottom:16px;">
+    <div class="exp"><b>合鍵のたとえ：</b>本物のサービスの「錠前」には、あなたの端末の鍵しか合いません。偽サイトは<b>別のドメイン（ネット上の住所）</b>なので、鍵が使えません。</div>
+  </div>
+  <div class="cols2">
+    <div class="pc hi" data-anim="pop" data-delay="650">
+      <h3>強いところ</h3>
+      <ul>
+        <li>パスワードを入力しない</li>
+        <li>使い回しが起きない</li>
+        <li>偽サイトにだまされにくい</li>
+        <li>指紋・顔のデータは送られない</li>
+      </ul>
+    </div>
+    <div class="pc" data-anim="pop" data-delay="900">
+      <h3>気をつけること</h3>
+      <ul>
+        <li class="x">端末の画面ロックPINを知られない</li>
+        <li class="x">「別の方法でログイン」の誘導に乗らない</li>
+        <li class="x">保存先のアカウントを守る</li>
+        <li class="x">なくした時の復旧手段を用意する</li>
+      </ul>
+    </div>
+  </div>
+  <div class="src">出典: レポート第4章 [15][17]</div>
+  <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
+  <div class="foot-r"><b>11</b> / 19</div>
+</div>
+
+<!-- 12. 比較表 -->
+<div class="slide" data-dur="60000">
+  <div class="kicker" data-anim="rise" data-delay="0" style="margin-bottom:22px;">3つの方式を比べると</div>
+  <div data-anim="rise" data-delay="300">
+    <table class="cmp">
+      <tr><th style="width:290px">方式</th><th style="width:480px">確認に使うもの</th><th style="width:420px">偽サイトへの強さ</th><th>残る弱点</th></tr>
+      <tr><td>パスワードだけ</td><td>知っている文字列</td><td>守れない</td><td>入力の盗難・使い回し・推測</td></tr>
+      <tr><td>＋SMSコード</td><td>文字列＋SMSで届くコード</td><td>コードを中継されうる</td><td>電話番号の乗っ取り</td></tr>
+      <tr><td>＋認証アプリ</td><td>文字列＋アプリのコード</td><td>コードを中継されうる</td><td>最初の秘密の流出</td></tr>
+      <tr><td>＋承認通知</td><td>文字列＋登録した端末</td><td>誤承認・誘導が残る</td><td>連続通知・操作の取り違え</td></tr>
+      <tr class="hi"><td>パスキー</td><td>端末内の鍵＋指紋・顔・PIN</td><td>強い</td><td>端末・保存先・復旧経路の侵害</td></tr>
+    </table>
+  </div>
+  <div class="blk" data-anim="rise" data-delay="900" style="margin-top:18px;">
+    <div class="exp">二段階認証にも、使わないより意味があります。主要メールや金融は、使えるなら<b>パスキー</b>へ。</div>
+  </div>
+  <div class="src">出典: レポート第3章の表、第10章</div>
+  <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
+  <div class="foot-r"><b>12</b> / 19</div>
+</div>
+
+<!-- 13. 落とし穴 -->
+<div class="slide" data-dur="60000">
   <div class="chip" data-anim="rise" data-delay="0">落とし穴</div>
-  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:28px;">でも、保存先のアカウントが破られたら？</div>
-  <div class="small" data-anim="rise" data-delay="320" style="margin-bottom:16px;">クラウド保存のパスキー悪用に、各社が注意喚起</div>
-  <div class="tags" style="margin-bottom:36px;">
-    <div class="tag" data-anim="pop" data-delay="600">SBI証券　10/2</div>
-    <div class="tag" data-anim="pop" data-delay="730">SMBC日興証券　10/6</div>
-  </div>
-  <div class="row">
-    <img class="ill ill-sm" data-anim="pop" data-delay="900" src="illust/08-vault.svg" alt="ひび割れた金庫と予備の鍵のイラスト">
-    <div class="col l">
-      <div class="hl hl-sm" data-anim="sweep" data-delay="1100" style="margin-bottom:36px;">守るべきは、Googleアカウント</div>
-      <div class="sub" data-anim="rise" data-delay="1750">主要メールと同期先を最優先に。<br>予備のログイン手段は<span class="pink">別の場所</span>に</div>
-    </div>
-  </div>
-  <div class="src">出典: SBI証券(2026-10-02)・SMBC日興証券(2026-10-06)の注意喚起／レポート第1・5章</div>
-  <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
-  <div class="foot-r"><b>08</b> / 10</div>
-</div>
-
-<!-- 9. Google 高度な保護機能 -->
-<div class="slide" data-dur="35000">
-  <div class="chip" data-anim="rise" data-delay="0">Google</div>
-  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:40px;">Googleの「高度な保護機能プログラム」</div>
-  <div class="row">
-    <img class="ill" data-anim="pop" data-delay="300" src="illust/09-shield-key.svg" alt="鍵と盾のイラスト">
-    <div class="col l">
-      <div class="hl hl-sm" data-anim="sweep" data-delay="380" style="margin-bottom:40px;">新端末は、鍵がないと入れない</div>
-      <div class="tags" style="justify-content:flex-start;margin-bottom:36px;">
-        <div class="tag" data-anim="pop" data-delay="950">新端末は鍵が必須</div>
-        <div class="tag" data-anim="pop" data-delay="1080">外部アプリを制限</div>
-        <div class="tag" data-anim="pop" data-delay="1210">復旧も厳格化</div>
+  <div class="kicker" data-anim="rise" data-delay="140">保存先のアカウントが破られたら？</div>
+  <div class="row" style="margin-bottom:18px;">
+    <img class="ill ill-sm" data-anim="pop" data-delay="300" src="illust/08-vault.svg" alt="ひび割れた金庫と予備の鍵のイラスト">
+    <div class="col l" style="width:1200px;">
+      <div class="exp" data-anim="rise" data-delay="500">パスキーはGoogleやAppleのアカウントに保存され、<b>他の端末とも共有（同期）</b>できます。便利ですが、<b>そのアカウントを乗っ取られると悪用される恐れ</b>があります。</div>
+      <div class="tags2" style="margin-top:16px;">
+        <div class="tag" data-anim="pop" data-delay="1000">SBI証券　10/2</div>
+        <div class="tag" data-anim="pop" data-delay="1130">SMBC日興証券　10/6</div>
       </div>
-      <div class="sub" data-anim="rise" data-delay="1700">利用は<span class="pink">無料</span>。締め出しへの注意も必要です</div>
+      <div class="exp" data-anim="rise" data-delay="1300" style="font-size:34px;color:var(--t-muted);margin-top:6px;">↑ 各社がこの点を注意喚起しています</div>
     </div>
   </div>
-  <div class="src">出典: レポート第6章 [22][23][24]（Google公式ヘルプ・FAQ）。条件は端末・地域・アカウント種別で異なります</div>
+  <div class="term" data-anim="rise" data-delay="1600"><span class="tl">ことば</span><span>「同期」＝別のスマホやパソコンでも使えるように、同じ情報を共有すること。守るべきは<b>アカウントそのもの</b>です。</span></div>
+  <div class="src">出典: SBI証券(2026-10-02)・SMBC日興証券(2026-10-06)、レポート第5章</div>
   <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
-  <div class="foot-r"><b>09</b> / 10</div>
+  <div class="foot-r"><b>13</b> / 19</div>
 </div>
 
-<!-- 10. 実演への中扉 -->
-<div class="slide gr s10" data-dur="15000">
+<!-- 14. 予備 -->
+<div class="slide" data-dur="60000">
+  <div class="chip" data-anim="rise" data-delay="0">備え</div>
+  <div class="kicker" data-anim="rise" data-delay="140">スマホをなくしても入れる「予備」を</div>
+  <div class="row" style="margin-bottom:20px;">
+    <img class="ill ill-sm" data-anim="pop" data-delay="300" src="illust/16-two-keys.svg" alt="自宅と携帯、別の場所に置いた2本の鍵のイラスト">
+    <div class="steps">
+      <div class="st" data-anim="rise" data-delay="500"><span class="n">1</span><span>別の鍵（セキュリティキー）や予備のパスキーを登録する</span></div>
+      <div class="st" data-anim="rise" data-delay="850"><span class="n">2</span><span>使えるサービスは、バックアップコードを安全に保管する</span></div>
+      <div class="st" data-anim="rise" data-delay="1200"><span class="n">3</span><span>再設定用のメール・電話番号を最新にしておく</span></div>
+      <div class="st" data-anim="rise" data-delay="1550"><span class="n">4</span><span><b>予備は、普段のスマホと別の場所に置く</b></span></div>
+    </div>
+  </div>
+  <div class="term" data-anim="rise" data-delay="1900"><span class="tl">ことば</span><span>「バックアップコード」＝一度だけ使える、ログイン用の予備の数字。同じアカウントに同期した2台だけでは、アカウントに入れなくなった時に備え切れません。</span></div>
+  <div class="src">出典: レポート第5・11章</div>
+  <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
+  <div class="foot-r"><b>14</b> / 19</div>
+</div>
+
+<!-- 15. お金を守る -->
+<div class="slide" data-dur="60000">
+  <div class="chip" data-anim="rise" data-delay="0">お金を守る</div>
+  <div class="kicker" data-anim="rise" data-delay="140">お金は「通知」と「公式の入口」で守る</div>
+  <div class="row" style="margin-bottom:20px;">
+    <img class="ill ill-sm" data-anim="pop" data-delay="300" src="illust/17-bell.svg" alt="通知ベルのイラスト">
+    <div class="steps">
+      <div class="st" data-anim="rise" data-delay="500"><span class="n">1</span><span>ログイン・取引・出金の通知をオンにする</span></div>
+      <div class="st" data-anim="rise" data-delay="850"><span class="n">2</span><span>メール・SMSのリンクは開かず、公式アプリやブックマークから入る</span></div>
+      <div class="st" data-anim="rise" data-delay="1200"><span class="n">3</span><span>使わないサービスのカード情報・本人確認書類は残さない</span></div>
+      <div class="st" data-anim="rise" data-delay="1550"><span class="n">4</span><span>明細を月1回など確認する<span class="tag-s">発表者の提案</span></span></div>
+    </div>
+  </div>
+  <div class="term" data-anim="rise" data-delay="1900"><span class="tl">注意</span><span>「漏洩しました」を口実にした偽のパスワード再設定メールもあります。連絡は必ず公式の入口から確かめます。</span></div>
+  <div class="src">出典: レポート第8・9章（4は一般的な助言として発表者が追加）</div>
+  <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
+  <div class="foot-r"><b>15</b> / 19</div>
+</div>
+
+<!-- 16. Google 高度な保護機能 -->
+<div class="slide" data-dur="60000">
+  <div class="chip" data-anim="rise" data-delay="0">Google</div>
+  <div class="kicker" data-anim="rise" data-delay="140">Googleの「高度な保護機能」とは</div>
+  <div class="row" style="margin-bottom:18px;">
+    <img class="ill ill-sm" data-anim="pop" data-delay="300" src="illust/09-shield-key.svg" alt="鍵と盾のイラスト">
+    <div class="steps">
+      <div class="st" data-anim="rise" data-delay="500"><span class="n">1</span><span>新しい端末では、<b>パスキーかセキュリティキーが必須</b></span></div>
+      <div class="st" data-anim="rise" data-delay="850"><span class="n">2</span><span>メールやドライブに入る外部アプリを制限</span></div>
+      <div class="st" data-anim="rise" data-delay="1200"><span class="n">3</span><span>不審なダウンロードのチェックと、復旧の本人確認を強化</span></div>
+    </div>
+  </div>
+  <div class="blk" data-anim="rise" data-delay="1600">
+    <div class="exp">Googleアカウントの保護をまとめて強くする<b>無料のプログラム</b>。記者・活動家・経営者など狙われやすい人向けですが、一般の人も使えます。</div>
+  </div>
+  <div class="term" data-anim="rise" data-delay="1900" style="margin-top:10px;"><span class="tl">注意</span><span>ログイン済みの端末で毎回鍵を求める、という意味ではありません。</span></div>
+  <div class="src">出典: レポート第6章 [22][23][24]（公式ページとの照合は未了）</div>
+  <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
+  <div class="foot-r"><b>16</b> / 19</div>
+</div>
+
+<!-- 17. 使う前に -->
+<div class="slide" data-dur="60000">
+  <div class="chip" data-anim="rise" data-delay="0">Google</div>
+  <div class="kicker" data-anim="rise" data-delay="140">使う前に知っておくこと</div>
+  <div class="row" style="margin-bottom:20px;">
+    <img class="ill ill-sm" data-anim="pop" data-delay="300" src="illust/19-caution.svg" alt="注意の三角と南京錠のイラスト">
+    <div class="steps">
+      <div class="st" data-anim="rise" data-delay="500"><span class="n">1</span><span><b>回復手段を先に用意</b>する（登録時に必要）</span></div>
+      <div class="st" data-anim="rise" data-delay="850"><span class="n">2</span><span>鍵を失うと<b>締め出される</b>恐れ。復旧に数日かかることも</span></div>
+      <div class="st" data-anim="rise" data-delay="1200"><span class="n">3</span><span>古いメールアプリや自作スクリプトが使えなくなることも</span></div>
+      <div class="st" data-anim="rise" data-delay="1550"><span class="n">4</span><span>会社・学校のアカウントは、管理者のルールに従う</span></div>
+    </div>
+  </div>
+  <div class="blk" data-anim="rise" data-delay="1900">
+    <div class="exp">強くすることと、<b>自分が戻れること</b>は両立が必要です。</div>
+  </div>
+  <div class="src">出典: レポート第6章 [23][24]</div>
+  <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
+  <div class="foot-r"><b>17</b> / 19</div>
+</div>
+
+<!-- 18. 実演 -->
+<div class="slide gr s10" data-dur="60000">
   <div class="chip" data-anim="rise" data-delay="0">実演</div>
   <div class="row">
     <img class="ill" data-anim="pop" data-delay="300" src="illust/10-demo-screen.svg" alt="画面とクリックのイラスト">
     <div class="col l">
-      <div class="big grad" data-anim="pop" data-delay="360" data-len="750" style="margin-bottom:44px;">では、実際に<br>見てみましょう</div>
-      <div class="sub" data-anim="rise" data-delay="1100">登録の前に確認すること：<br><span class="pink">回復手段</span>の用意・締め出し・外部アプリの制限</div>
+      <div class="big grad" data-anim="pop" data-delay="360" data-len="750" style="font-size:96px;margin-bottom:30px;">では、実際に<br>見てみましょう</div>
+      <div class="steps">
+        <div class="st" data-anim="rise" data-delay="900"><span class="n">1</span><span>アカウントのセキュリティ設定を点検する</span></div>
+        <div class="st" data-anim="rise" data-delay="1200"><span class="n">2</span><span>パスワードを入力せず、パスキーでログインする</span></div>
+        <div class="st" data-anim="rise" data-delay="1500"><span class="n">3</span><span>高度な保護機能の画面を見る（登録の手前で止める）</span></div>
+      </div>
     </div>
   </div>
   <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
-  <div class="foot-r"><b>10</b> / 10</div>
+  <div class="foot-r"><b>18</b> / 19</div>
 </div>
 
-<!-- 付録1. 疑ったときの初動 -->
-<div class="slide" data-dur="20000">
+<!-- 19. 今夜やる3つ -->
+<div class="slide" data-dur="60000">
+  <div class="chip" data-anim="rise" data-delay="0">今夜やる</div>
+  <div class="kicker" data-anim="rise" data-delay="140">今夜やる3つ</div>
+  <div class="row" style="margin-bottom:22px;">
+    <img class="ill ill-sm" data-anim="pop" data-delay="300" src="illust/18-checklist.svg" alt="チェックリストのイラスト">
+    <div class="steps">
+      <div class="st" data-anim="rise" data-delay="500"><span class="n">1</span><span>主要メールとGoogle・Appleのアカウントに、<b>パスキーか二段階認証</b>を設定。使い回しをやめる</span></div>
+      <div class="st" data-anim="rise" data-delay="900"><span class="n">2</span><span>スマホの<b>画面ロック</b>を強くし、OS・アプリを更新する</span></div>
+      <div class="st" data-anim="rise" data-delay="1300"><span class="n">3</span><span><b>予備のログイン手段</b>を、普段のスマホと別の場所に用意する</span></div>
+    </div>
+  </div>
+  <div class="blk" data-anim="rise" data-delay="1700">
+    <div class="exp">全部を一度にやらなくて大丈夫。まずは<b>1</b>から始めましょう。</div>
+  </div>
+  <div class="src">出典: レポート「先に実行するなら」「今日確認する項目」</div>
+  <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
+  <div class="foot-r"><b>19</b> / 19</div>
+</div>
+
+<!-- 付録1. 疑ったとき -->
+<div class="slide" data-dur="60000">
   <div class="chip" data-anim="rise" data-delay="0">付録 1</div>
-  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:40px;">疑ったときの最初の一手</div>
-  <div class="cards" style="margin-bottom:44px;">
+  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:30px;">疑ったときの最初の一手</div>
+  <div class="cards three" style="margin-bottom:30px;">
     <div class="card" data-anim="pop" data-delay="420">
-      <div class="label">① お金を止める</div>
+      <div class="label">1　お金を止める</div>
       <div class="value grad">連絡</div>
-      <div class="label desc">カード会社・金融機関へ<br>停止を相談</div>
+      <div class="label desc">カード会社・金融機関に停止を相談する</div>
     </div>
     <div class="card" data-anim="pop" data-delay="600">
-      <div class="label">② 入口を守る</div>
+      <div class="label">2　入口を守る</div>
       <div class="value grad">変更</div>
-      <div class="label desc">主要メールと同期先の<br>パスワードを変え、全端末ログアウト</div>
+      <div class="label desc">主要メールと保存先のパスワードを変え、全端末をログアウト</div>
     </div>
     <div class="card" data-anim="pop" data-delay="780">
-      <div class="label">③ 侵入後の設定を消す</div>
+      <div class="label">3　残った入口を消す</div>
       <div class="value grad">取消</div>
-      <div class="label desc">知らない鍵・転送設定・<br>外部連携を取り消す</div>
+      <div class="label desc">知らない鍵・転送設定・外部連携を取り消す</div>
     </div>
   </div>
-  <div class="sub" data-anim="rise" data-delay="1500">パスワード変更だけでは<span class="pink">入口が残る</span>ことがあります</div>
-  <div class="src">出典: レポート第9章 [01][04][29]。証拠（メール・履歴・日時）は残しつつ、被害を止める連絡を先に</div>
+  <div class="blk" data-anim="rise" data-delay="1400"><div class="exp">パスワードを変えるだけでは、<b>侵入後に作られた入口</b>が残ることがあります。</div></div>
+  <div class="src">出典: レポート第9章 [01][04][29]</div>
   <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
-  <div class="foot-r"><b>A1</b> / A3</div>
+  <div class="foot-r"><b>A1</b> / A4</div>
 </div>
 
-<!-- 付録2. 実演の流れ -->
-<div class="slide" data-dur="20000">
+<!-- 付録2. ことばの辞典 -->
+<div class="slide" data-dur="60000">
   <div class="chip" data-anim="rise" data-delay="0">付録 2</div>
+  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:24px;">ことばの辞典</div>
+  <dl class="gl" data-anim="rise" data-delay="400">
+    <div class="g"><dt>フィッシング</dt><dd>本物そっくりの偽サイト・偽メールで、情報をだまし取る詐欺</dd></div>
+    <div class="g"><dt>使い回し</dt><dd>複数のサービスで同じパスワードを使うこと</dd></div>
+    <div class="g"><dt>二段階認証</dt><dd>パスワードのあとに、もう1回確認する仕組み</dd></div>
+    <div class="g"><dt>パスキー</dt><dd>パスワードの代わりに、端末の鍵と指紋・顔・PINでログインする仕組み</dd></div>
+    <div class="g"><dt>同期</dt><dd>別のスマホやパソコンでも使えるよう、情報を共有すること</dd></div>
+    <div class="g"><dt>管理アプリ</dt><dd>パスワードを作り、覚えて、入力まで手伝ってくれるアプリ</dd></div>
+  </dl>
+  <div class="src">出典: レポート第2〜5章</div>
+  <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
+  <div class="foot-r"><b>A2</b> / A4</div>
+</div>
+
+<!-- 付録3. 実演の流れ -->
+<div class="slide" data-dur="60000">
+  <div class="chip" data-anim="rise" data-delay="0">付録 3</div>
   <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:24px;">実演の流れ（約3分）</div>
-  <div class="grid2" style="margin-bottom:28px;">
+  <div class="grid2" style="margin-bottom:26px;">
     <div class="card" data-anim="pop" data-delay="400">
       <div class="label">STEP 1</div>
       <div class="value grad">設定を点検</div>
@@ -683,26 +966,26 @@ body[data-theme]:not([data-theme="signature"]) .meter { background:var(--t-pl); 
       <div class="label desc">登録せず「今夜やる3つ」を伝える</div>
     </div>
   </div>
-  <div class="sub" data-anim="rise" data-delay="1500">使うのは<span class="pink">テスト用アカウント</span>か、画面のみ</div>
+  <div class="blk" data-anim="rise" data-delay="1400"><div class="exp">使うのは<b>テスト用アカウント</b>か、画面のみ。</div></div>
   <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
-  <div class="foot-r"><b>A2</b> / A3</div>
+  <div class="foot-r"><b>A3</b> / A4</div>
 </div>
 
-<!-- 付録3. 出典と確認状況 -->
-<div class="slide" data-dur="40000">
-  <div class="chip" data-anim="rise" data-delay="0">付録 3</div>
-  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:28px;">出典と確認状況（2026-10-28 作成）</div>
+<!-- 付録4. 出典と確認状況 -->
+<div class="slide" data-dur="60000">
+  <div class="chip" data-anim="rise" data-delay="0">付録 4</div>
+  <div class="kicker" data-anim="rise" data-delay="140" style="margin-bottom:24px;">出典と確認状況（2026-10-29 更新）</div>
   <div class="refs" data-anim="rise" data-delay="400">
-    <p><b>レポート</b>「パスワード 二段階認証 パスキー 個人情報漏洩への備え」第1〜9章と出典[01]〜[33]（調査基準日 2026-10-29）</p>
+    <p><b>レポート</b>「パスワード 二段階認証 パスキー 個人情報漏洩への備え」第1〜11章と出典[01]〜[33]</p>
     <p><b>ソースネクスト</b> 22,519,960件（可能性）　ScanNetSecurity 2026-10-20／@IT 2026-10-17</p>
     <p><b>警察庁統計</b> 2025年 約103.97億円・245万4,297件　報道（2026-03-12）</p>
-    <p><b>カード不正利用</b> 2025年 510.5億円／2026年4〜6月 107.7億円　日本クレジット協会・日本クレジットカード協会（報道）</p>
+    <p><b>カード不正利用</b> 2025年 510.5億円／2026年4〜6月 107.7億円　日本クレジット協会ほか（報道）</p>
     <p><b>証券各社の注意喚起</b> SBI証券 2026-10-02／SMBC日興証券 2026-10-06（検索で確認）</p>
-    <p class="warn"><b>未確認</b> 三菱UFJモルガン・スタンレー証券 10/16・IPA個人向け 10/26（レポート記載のみ）／Google公式ページの文言照合</p>
+    <p class="warn"><b>未確認</b> Google公式ページの文言照合／三菱UFJモルガン・スタンレー証券 10/16・IPA個人向け 10/26（レポート記載のみ・未使用）</p>
   </div>
-  <div class="note" data-anim="rise" data-delay="900" style="margin-top:28px;">数値は公式発表で更新されることがあります。最新は各公式ページで確認してください</div>
+  <div class="note" data-anim="rise" data-delay="900" style="margin-top:20px;font-size:30px;">数値は報道ベースで、公式発表で更新されることがあります</div>
   <div class="foot-l">PASSWORD &amp; CARD SECURITY</div>
-  <div class="foot-r"><b>A3</b> / A3</div>
+  <div class="foot-r"><b>A4</b> / A4</div>
 </div>
 
 <div id="prog"></div>
@@ -870,6 +1153,115 @@ body[data-theme]:not([data-theme="signature"]) .meter { background:var(--t-pl); 
       play();
     }
     window.__ready = true;
+  });
+})();
+</script>
+<script id="manual">
+/* 手動めくり（エンジンは変更せず、公開されている window.__seek を使う別スクリプト）
+   → / Space / Enter / PageDown / クリック右側 = 次へ ・ ← / PageUp / Backspace / クリック左側 = 前へ ・ Home / End */
+(function () {
+  var FADE = 450;
+  var DEFAULT_LEN = { rise: 600, pop: 650, sweep: 520, stamp: 380, popback: 520, ghost: 900, fill: 1100, count: 1100 };
+  var view = document.getElementById('view');
+  var cover = document.getElementById('cover');
+  var prog = document.getElementById('prog');
+  var slides = Array.prototype.slice.call(document.querySelectorAll('#stage .slide'));
+  var n = slides.length;
+  var starts = [], holds = [], acc = 0;
+
+  slides.forEach(function (s, i) {
+    starts.push(acc);
+    acc += (+(s.dataset.dur || 6000)) - FADE;
+    var maxEnd = 0;
+    Array.prototype.forEach.call(s.querySelectorAll('[data-anim]'), function (el) {
+      var len = +(el.dataset.len || DEFAULT_LEN[el.dataset.anim] || 600);
+      maxEnd = Math.max(maxEnd, +(el.dataset.delay || 0) + len);
+    });
+    holds.push((i === 0 ? 150 : FADE * 0.7) + maxEnd + 80);
+  });
+
+  var cur = 0, token = 0, done = false;
+  var hint = document.createElement('div');
+  hint.id = 'hint';
+  view.appendChild(hint);
+  var hintTimer = null;
+  function showHint(msg, ms) {
+    hint.textContent = msg;
+    hint.className = 'on';
+    clearTimeout(hintTimer);
+    hintTimer = setTimeout(function () { hint.className = ''; }, ms || 4000);
+  }
+
+  function setProg() { prog.style.width = ((cur + 1) / n * 100) + '%'; }
+  function save() { try { history.replaceState(null, '', '#' + (cur + 1)); } catch (e) {} }
+
+  function go(i, instant) {
+    i = Math.max(0, Math.min(n - 1, i));
+    token++;
+    var my = token;
+    cur = i;
+    var t0 = starts[i], end = t0 + holds[i];
+    save();
+    if (instant) {
+      window.__seek(end);
+      setProg();
+      done = true;
+      return;
+    }
+    done = false;
+    var w0 = null;
+    function step(now) {
+      if (my !== token) return;
+      if (w0 === null) w0 = now;
+      var t = Math.min(t0 + (now - w0), end);
+      window.__seek(t);
+      setProg();
+      if (t < end) requestAnimationFrame(step); else done = true;
+    }
+    requestAnimationFrame(step);
+  }
+
+  function next() {
+    if (!done) { go(cur, true); return; }          // 途中なら、まず完成状態まで進める
+    if (cur < n - 1) go(cur + 1, false);
+    else showHint('これが最後のスライドです（← で戻れます）', 2500);
+  }
+  function prev() { if (cur > 0) go(cur - 1, true); }
+
+  function blockEngine(ev) { ev.preventDefault(); ev.stopImmediatePropagation(); }
+
+  document.addEventListener('keydown', function (ev) {
+    if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
+    var k = ev.code;
+    if (k === 'ArrowRight' || k === 'ArrowDown' || k === 'Space' || k === 'Enter' || k === 'PageDown') { blockEngine(ev); next(); }
+    else if (k === 'ArrowLeft' || k === 'ArrowUp' || k === 'Backspace' || k === 'PageUp') { blockEngine(ev); prev(); }
+    else if (k === 'Home' || k === 'KeyR') { blockEngine(ev); go(0, true); }
+    else if (k === 'End') { blockEngine(ev); go(n - 1, true); }
+  }, true);
+
+  view.addEventListener('click', function (ev) {
+    if (ev.clientX < window.innerWidth * 0.3) prev(); else next();
+  });
+
+  var sx = null;
+  view.addEventListener('touchstart', function (ev) { sx = ev.changedTouches[0].clientX; }, { passive: true });
+  view.addEventListener('touchend', function (ev) {
+    if (sx === null) return;
+    var dx = ev.changedTouches[0].clientX - sx;
+    sx = null;
+    if (Math.abs(dx) > 50) { if (dx < 0) next(); else prev(); }
+  }, { passive: true });
+
+  window.__go = function (i, instant) { go(i, instant !== false); };
+  window.__cur = function () { return cur; };
+  window.__count = function () { return n; };
+
+  cover.style.display = 'none';
+  document.fonts.ready.then(function () {
+    var m = /^#(\d+)$/.exec(location.hash || '');
+    if (m && +m[1] >= 1 && +m[1] <= n) { go(+m[1] - 1, true); }
+    else { go(0, false); showHint('→ キー / クリックで次へ　← キーで前へ', 5000); }
+    window.__manualReady = true;
   });
 })();
 </script>

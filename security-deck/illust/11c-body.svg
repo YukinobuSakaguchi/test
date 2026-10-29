@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none" stroke="#0A2A3C" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+  <circle cx="200" cy="200" r="178" fill="#CDE8EF" stroke="none"/>
+  <!-- scan brackets -->
+  <path d="M96 150 V112 a16 16 0 0 1 16 -16 H150"/>
+  <path d="M250 96 H288 a16 16 0 0 1 16 16 V150"/>
+  <path d="M304 250 V288 a16 16 0 0 1 -16 16 H250"/>
+  <path d="M150 304 H112 a16 16 0 0 1 -16 -16 V250"/>
+  <!-- fingerprint -->
+  <g stroke="#007A99" stroke-width="9">
+    <path d="M142 224 a58 58 0 0 1 116 0"/>
+    <path d="M158 232 a42 42 0 0 1 84 0"/>
+    <path d="M174 240 a26 26 0 0 1 52 0"/>
+    <path d="M190 248 a10 10 0 0 1 20 0"/>
+    <path d="M142 224 V236 M158 232 V262 M174 240 V272 M200 250 V284 M242 232 V258 M226 240 V268"/>
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none" stroke="#0A2A3C" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+  <circle cx="200" cy="200" r="178" fill="#CDE8EF" stroke="none"/>
+  <rect x="116" y="48" width="168" height="304" rx="28" fill="#FFFFFF"/>
+  <path d="M176 70 H224"/>
+  <!-- notification card -->
+  <rect x="136" y="104" width="128" height="86" rx="14" fill="#FCE9A8"/>
+  <path d="M154 130 H246 M154 154 H224"/>
+  <!-- buttons -->
+  <rect x="136" y="224" width="58" height="60" rx="14" fill="#007A99"/>
+  <path d="M150 254 L162 266 L182 242" stroke="#FFFFFF" stroke-width="8"/>
+  <rect x="206" y="224" width="58" height="60" rx="14" fill="#C8452D"/>
+  <path d="M222 240 L248 268 M248 240 L222 268" stroke="#FFFFFF" stroke-width="8"/>
+</svg>
